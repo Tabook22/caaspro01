@@ -1,0 +1,17 @@
+{% include "partials/_header.html" %}
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+   <div class="container">
+      <div class="col-8">
+         <h1>My Site</h1>
+         <hr class="mt-0 mb-4">
+         {% if user.is_authenticated %}
+            {% block content %}
+            {% endblock %}
+         {% else %}
+            <P><a href="/login">Login Here</a></P>
+         {% endif %}
+      </div>
+   </div>
+</main>
+{% include "partials/_footer.html" %}
