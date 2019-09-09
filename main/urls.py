@@ -11,5 +11,5 @@ urlpatterns = [
     path('',home, name=('home')),
     path("home/", home, name="home"),
     path("create/", create, name="create"),
-    path("view/", view, name="view"),  # <-- added
+    path("view/", view, name="view"), 
 ]

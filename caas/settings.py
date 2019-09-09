@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
+    'peertutor.apps.PeertutorConfig',
 ]
 
 MIDDLEWARE = [

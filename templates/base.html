@@ -1,16 +1,23 @@
 {% include "partials/_header.html" %}
+<!-- Side Bar -->
+
+
 <!-- Begin page content -->
 <main role="main" class="flex-shrink-0">
    <div class="container">
+      <div class="col-4">
+         <div class="sidenav">
+            <a href="/">Home</a>
+            <a href="/create">Create</a>
+            <a href="/view">View</a>
+            <a href=""></a>
+         </div>
+      </div>
       <div class="col-8">
          <h1>My Site</h1>
          <hr class="mt-0 mb-4">
-        
-            {% block content %}
-            {% endblock %}
-         
-         
-         
+         {% block content %}
+         {% endblock %}
       </div>
    </div>
 </main>
