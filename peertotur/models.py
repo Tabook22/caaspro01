@@ -46,7 +46,7 @@ class Peertoturq(models.Model):
 class Peertoturfile(models.Model):
     pname=models.ForeignKey('Peertotur', on_delete=models.CASCADE)
     fname= models.CharField(max_length=500)
-    filepath= models.FileField(upload_to='files/', null=True, verbose_name="")
+    filepath= models.FileField(upload_to='files/', null=True, blank=True, verbose_name="")
 
     def __str__(self):
         return self.fname + ": " + str(self.filepath)

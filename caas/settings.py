@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
-    'peertutor.apps.PeertutorConfig',
+    'peertotur.apps.PeertoturConfig',
 ]
 
 MIDDLEWARE = [
@@ -131,8 +131,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR,'static') #This generates the directory where files static files are placed when you run ./manage.py collectstatic
 
 # MEDIA
-MEDIA_ROOT = os.path.join(BASE_DIR,"media")
-MEDIA_URL= '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,"media") # here is where we want djanog to save uploaded files
+MEDIA_URL= '/media/'  #this is how we want to serve those files
 
 CRISPY_TEMPLATE_PACK="bootstrap4"
 
