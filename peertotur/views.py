@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Peertoturfile
 from .forms import FileForm
 from django.core.files.storage import FileSystemStorage
@@ -27,3 +27,20 @@ def upload(request):
         #fs.save(uploaded_file.name, uploaded_file) #to save the file in the folder
         context['url']=fs.url(fname)
     return render(request, 'peertotur/upload.html', context)
+
+def upload_list(request):
+    uploadedfiles=Peertoturfile.objects.all()
+    return render(request, 'peertotur/upload_list.html',{'uploadedfiles':uploadedfiles})
+
+def upload_file(request):
+    if request.method=="POST":
+        form=FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('upload_list.html')
+    else:
+        form=FileForm()
+    
+    context={}
+    context['form']=form
+    return render(request,'peertotur/upload_file.html',context)
