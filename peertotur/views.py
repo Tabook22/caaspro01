@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from .models import Peertoturfile
 from .forms import FileForm
+from django.views.generic import TemplateView, ListView
 from django.core.files.storage import FileSystemStorage
+
 
 def showfile(request):
     lastfile= Peertoturfile.objects.last()
@@ -44,3 +46,8 @@ def upload_file(request):
     context={}
     context['form']=form
     return render(request,'peertotur/upload_file.html',context)
+
+class uploadfilelst(ListView):
+   model =Peertoturfile
+   template_name='peertotur/upload_list.html'
+   context_object_name='uploadedfiles'

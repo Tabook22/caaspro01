@@ -25,7 +25,7 @@ class Peertotur(models.Model):
     pgsm=models.CharField(max_length=20)
     yearofstudy=models.CharField(max_length=20, choices=yearofstudy_choices)
     #attchments=models.FileField(upload_to='files/', null=True, verbose_name="")
-
+    pimg=models.ImageField(upload_to='peertoturs/img/', null=True, blank=True)
     def __str__(self):
         return self.pname
 
