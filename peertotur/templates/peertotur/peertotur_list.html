@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content%}
-<h2>Upload List</h2>
+<h2>Peertotur list</h2>
 <p>
-    <a href="{% url 'peertotur:class_fileupload' %}" class="btn btn-primary">Upload File</a>
+    <a href="{% url 'peertotur:add_peertotur' %}" class="btn btn-primary">Add New Peertotur</a>
 </p>
 <table class="table">
     <thead>
@@ -14,16 +14,16 @@
         </tr>
     </thead>
     <tbody>
-        {% for f in uploadedfiles %}
+        {% for f in peertoturlist %}
         <tr>
             <td>
-                 {{ f.fname}}
+                 {{ f.pname}}
             </td>
             <td>
-                <a href="{{ f.filepath.url }}" class="btn btn-primary" target="_blank">view attatchment</a>
+                <a href="{{ f.pimg.url }}" class="btn btn-primary" target="_blank">view attatchment</a>
             </td>
             <td>
-                <form method="POST" action="{% url 'peertotur:upload_delete' f.pk %}">
+                <form method="POST" action="{% url 'peertotur:peertotur_delete' f.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm" >Delete File</button>
                 </form>

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Peertoturfile
-from .forms import FileForm
-from django.views.generic import TemplateView, ListView, CreateView
-from django.core.files.storage import FileSystemStorage
+from django.urls import reverse_lazy
+from .models import Peertotur, Peertoturfile
+from .forms import PeertoturForm, FileForm
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView
+from django.core.files.storage import FileSystemStorage # to save the file in the filesytem not in the database
 
 
 def showfile(request):
@@ -49,6 +50,31 @@ def upload_file(request):
     context['form'] = form
     return render(request, 'peertotur/upload_file.html', context)
 
+def upload_delete(request, pk):
+    if request.method=="POST":
+        peertoturfile=Peertoturfile.objects.get(pk=pk)
+        peertoturfile.delete()
+    return redirect('peertotur:upload_list')
+
+class add_peertotur(CreateView):
+    model=Peertotur
+    #form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
+    template_name="peertotur/add_peertotur.html"
+    fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
+    success_url = reverse_lazy('peertotur:peertotur_list')
+    template_name = 'peertotur/add_peertotur.html'
+    queryset = Peertotur.objects.all()
+
+class peertotur_list(ListView):
+    model=Peertotur
+    templat_name="peertotur/peertotur_list.html"
+    context_object_name="peertoturlist"
+
+class peertotur_delete(DeleteView):
+    model=Peertotur
+    templat_name="peertotur/peertotur_delete.html"
+    context_object_name="peer"
+    success_url = reverse_lazy('peertotur:peertotur_list')
 
 class uploadfilelst(ListView):
     model = Peertoturfile

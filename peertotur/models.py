@@ -20,14 +20,19 @@ class Peertotur(models.Model):
     pgpamajor=models.CharField(max_length=10)
     pgpacum=models.CharField(max_length=100)
     pexgraduate=models.IntegerField(max_length=4)
-    reqdate=models.DateTimeField(auto_now=True)
+    reqdate=models.DateTimeField(auto_now_add=True)
     ptel=models.CharField(max_length=20)
     pgsm=models.CharField(max_length=20)
     yearofstudy=models.CharField(max_length=20, choices=yearofstudy_choices)
     #attchments=models.FileField(upload_to='files/', null=True, verbose_name="")
-    pimg=models.ImageField(upload_to='peertoturs/img/', null=True, blank=True)
+    pimg=models.ImageField(upload_to='peertoturs/img/', null=True, blank=True) # null let it be null on the database and the blank let let it be blank on the form, because we have form validation, someime it will not allow blancks
     def __str__(self):
         return self.pname
+
+    #here we use this to delete the uploaded peertotur images
+    def delete(self, *args, **kwargs):
+        self.pimg.delete()
+        super().delete(*args, **kwargs)
 
 class Peertoturexperties(models.Model):
     pname=models.ForeignKey('Peertotur', on_delete=models.CASCADE)
@@ -50,3 +55,8 @@ class Peertoturfile(models.Model):
 
     def __str__(self):
         return self.fname + ": " + str(self.filepath)
+    
+    #here we use this to delete the uploaded files
+    def delete(self, *args, **kwargs):
+        self.filepath.delete()
+        super().delete(*args, **kwargs)
