@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content%}
+<h2>Peertotur Detail</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        <tr>
+            <td>
+                 {{object.pname}}
+            </td>
+            <td>
+                    <a href="{% url 'peertotur:peertotur_update' object.pk %}" class="btn btn-primary" target="_blank">Edit</a>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+{% endblock %}

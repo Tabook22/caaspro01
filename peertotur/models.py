@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 
 
@@ -26,6 +26,7 @@ class Peertotur(models.Model):
     yearofstudy=models.CharField(max_length=20, choices=yearofstudy_choices)
     #attchments=models.FileField(upload_to='files/', null=True, verbose_name="")
     pimg=models.ImageField(upload_to='peertoturs/img/', null=True, blank=True) # null let it be null on the database and the blank let let it be blank on the form, because we have form validation, someime it will not allow blancks
+    
     def __str__(self):
         return self.pname
 
@@ -33,6 +34,15 @@ class Peertotur(models.Model):
     def delete(self, *args, **kwargs):
         self.pimg.delete()
         super().delete(*args, **kwargs)
+    
+    #this means after i created a new peertotur i will be transfered to the newlly created peertotur, but i can override it by
+    #success_url="/" for example this will be inside the peertotur_create view it self inside the view.py fiel
+    #also i can use"
+    #                def_success_url(self): 
+                        #return '/'
+    def get_absolute_url(self):
+        #here the reverse function is to go to peertotur_detail view
+        return reverse('peertotur:peertotur_detail', kwargs={'pk': self.pk})
 
 class Peertoturexperties(models.Model):
     pname=models.ForeignKey('Peertotur', on_delete=models.CASCADE)

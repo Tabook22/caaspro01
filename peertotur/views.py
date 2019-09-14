@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Peertotur, Peertoturfile
 from .forms import PeertoturForm, FileForm
-from django.views.generic import TemplateView, ListView, CreateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.core.files.storage import FileSystemStorage # to save the file in the filesytem not in the database
 
 
@@ -65,6 +65,22 @@ class add_peertotur(CreateView):
     template_name = 'peertotur/add_peertotur.html'
     queryset = Peertotur.objects.all()
 
+    def from_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+# Notice: the primary funciton of DetailView is to redern view from a specific object
+class peertotur_detail(DetailView):
+    template_name="peertotur/peertotur_detail.html"
+    context_object_name="peer"
+    #queryset=Peertotur.objects.all() # there is not need for this because inside urls.py we changed the <int:pk> to <int:id>, and then we have the use the bellow function 
+    # def get_object(self), which will return to us the needed record based up on the id we obtained from the url
+    # if we are need to use querset=Peeertotur.objects.all() then we have to change back <int:pk> and not use the def get_object(self) method
+
+    def get_object(self):
+            id_=self.kwargs.get("id") #this is the actual id which passed through the url
+            return get_object_or_404(Peertotur, id=id_)
+
 class peertotur_list(ListView):
     model=Peertotur
     templat_name="peertotur/peertotur_list.html"
@@ -80,6 +96,25 @@ class uploadfilelst(ListView):
     model = Peertoturfile
     template_name = 'peertotur/upload_list.html'
     context_object_name = 'uploadedfiles'
+
+class peertotur_update(UpdateView):
+    #model=Peertotur
+    template_name="peertotur/peertotur_update.html"
+    form_class= PeertoturForm
+    #context_object_name="peer"
+    #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
+    success_url = reverse_lazy('peertotur:peertotur_list')
+
+    def get_object(self):
+        id=self.kwargs.get("id")
+        return get_object_or_404(Peertotur, id=id)
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    # def get_object(self):
+        #id=self.kwargs.get("id")
+       # return get_object_or_404(Peertotur, id=id)
 
 
 class uploadfiles(CreateView):

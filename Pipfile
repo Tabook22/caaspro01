@@ -11,6 +11,7 @@ gunicorn = "*"
 django-crispy-forms = "*"
 pillow = "*"
 faker = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 autopep8 = "*"

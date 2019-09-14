@@ -23,6 +23,9 @@
                 <a href="{{ f.pimg.url }}" class="btn btn-primary" target="_blank">view attatchment</a>
             </td>
             <td>
+                    <a href="{% url 'peertotur:peertotur_detail' f.pk %}" class="btn btn-primary" target="_blank">More Details</a>
+                </td>
+            <td>
                 <form method="POST" action="{% url 'peertotur:peertotur_delete' f.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger btn-sm" >Delete File</button>
