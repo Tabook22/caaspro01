@@ -4,8 +4,9 @@
 <h2>Add New Peertotur</h2>
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
+  {% crispy form %}
   <!-- {{ form|crispy }} -->
-  <div class="form-row">
+  <!-- <div class="form-row">
     <div class="form-group col-md-12 mb-0">
       {{ form.pname|as_crispy_field }}
     </div>
@@ -51,6 +52,6 @@
         {{ form.pimg|as_crispy_field }}
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Add New</button>
+    <button type="submit" class="btn btn-primary">Add New</button> -->
 </form>
 {% endblock %}

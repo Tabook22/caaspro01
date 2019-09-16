@@ -34,6 +34,7 @@ def upload(request):
 
 def upload_list(request):
     uploadedfiles = Peertoturfile.objects.all()
+    print(uploadedfiles)
     return render(request, 'peertotur/upload_list.html', {'uploadedfiles': uploadedfiles})
 
 
@@ -58,11 +59,10 @@ def upload_delete(request, pk):
 
 class add_peertotur(CreateView):
     model=Peertotur
-    #form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
+    form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
     template_name="peertotur/add_peertotur.html"
-    fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
+    #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
     success_url = reverse_lazy('peertotur:peertotur_list')
-    template_name = 'peertotur/add_peertotur.html'
     queryset = Peertotur.objects.all()
 
     def from_valid(self, form):

@@ -70,3 +70,12 @@ class Peertoturfile(models.Model):
     def delete(self, *args, **kwargs):
         self.filepath.delete()
         super().delete(*args, **kwargs)
+
+class StudentComments(models.Model):
+    mtitle=models.CharField(max_length=300, blank=True, null=True)
+    mbody=models.CharField(max_length=300,null=True, blank=True)
+    mstatus=models.BooleanField(default=False)
+    mdate=models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.mtitle
