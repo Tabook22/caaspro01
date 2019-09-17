@@ -5,7 +5,6 @@ from crispy_forms.layout import Layout, Div, Submit, Row, Column, Field
 from .models import Peertotur, Peertoturfile
 
 class PeertoturForm(forms.ModelForm):
-    pass
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

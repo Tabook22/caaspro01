@@ -19,7 +19,7 @@ class Peertotur(models.Model):
     pdep=models.CharField(verbose_name="Department",max_length=100)
     pgpamajor=models.CharField(verbose_name="GPA in major",max_length=10)
     pgpacum=models.CharField(verbose_name="Cumulative GPA",max_length=100)
-    pexgraduate=models.DateField(verbose_name="Expected date of Graduation (mm/dd/YYYY)", auto_now_add=False, auto_now=False, blank=True)
+    pexgraduate=models.CharField(verbose_name="Expected date of Graduation", max_length=20, null=True, blank=True)
     reqdate=models.DateTimeField(auto_now_add=True)
     ptel=models.CharField(verbose_name="Tel",max_length=20)
     pgsm=models.CharField(verbose_name="GSM",max_length=20)
@@ -75,7 +75,7 @@ class StudentComments(models.Model):
     mtitle=models.CharField(max_length=300, blank=True, null=True)
     mbody=models.CharField(max_length=300,null=True, blank=True)
     mstatus=models.BooleanField(default=False)
-    mdate=models.DateField(auto_now_add=True)
+    mdate=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.mtitle
