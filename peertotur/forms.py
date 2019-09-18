@@ -1,4 +1,5 @@
 from django import forms
+from django.urls import reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, Row, Column, Field
@@ -6,9 +7,10 @@ from .models import Peertotur, Peertoturfile
 
 class PeertoturForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
+        super(PeertoturForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
         self.helper.form_method = 'post'
+        self.helper.form_action = reverse('peertotur:peertotur_list')
         self.helper.layout = Layout(
             Row(
                 Column('pname', css_class='form-group col-md-6 mb-0'),

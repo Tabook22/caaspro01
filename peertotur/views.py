@@ -59,14 +59,16 @@ def upload_delete(request, pk):
 
 class add_peertotur(CreateView):
    #model=Peertotur
+    print("---------------------- am here ---------------------")
     form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
     template_name="peertotur/add_peertotur.html"
     #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
     #success_url = reverse_lazy('peertotur:peertotur_list')
     queryset = Peertotur.objects.all()
+    print(queryset)
 
     def from_valid(self, form):
-        print(form.cleaned_data)
+        #print(form.instance.user)=request.user # the user
         return super().form_valid(form)
 
 # Notice: the primary funciton of DetailView is to redern view from a specific object

@@ -40,9 +40,9 @@ class Peertotur(models.Model):
     #also i can use"
     #                def_success_url(self): 
                         #return '/'
-    def get_absolute_url(self):
-        #here the reverse function is to go to peertotur_detail view
-        return reverse('peertotur:peertotur_detail', kwargs={'pk': self.pk})
+    # def get_absolute_url(self):
+    #     #here the reverse function is to go to peertotur_detail view
+    #     return reverse('peertotur:peertotur_list', kwargs={'pk': self.pk})
 
 class Peertoturexperties(models.Model):
     pname=models.ForeignKey('Peertotur', on_delete=models.CASCADE)
