@@ -33,12 +33,12 @@ class PeertoturForm(forms.ModelForm):
             ),
             Row(
                 Column('ptel',css_class='form-group col-md-3 mb-0'),
-                Column('pgsm',css_class='form-group col-md-3 mb-0'),
-                Column('yearofstudy',css_class='form-group col-md-6 mb-0'),
+                 Column('pgsm',css_class='form-group col-md-3 mb-0'),
+               Column('yearofstudy',css_class='form-group col-md-6 mb-0'),
                 css_class='form-row'
             ),
 
-            'pimg',
+             'pimg',
             Submit('submit', 'Sign in')
         )
     

@@ -8,19 +8,28 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Url</th>
-            <th>Delete</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>  </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for f in peertoturlist %}
         <tr>
+            <td>{{ forloop.counter }}</td>
             <td>
                  {{ f.pname}}
             </td>
             <td>
-                <a href="{{ f.pimg.url }}" class="btn btn-primary" target="_blank">view attatchment</a>
+                {% if f.pimg %}
+                    <a href="{{ f.pimg.url }}" class="btn" target="_blank">
+                        <img src="{{ f.pimg.url }}" style="max-width:60px;">
+                    </a>
+                {% else %}
+                    <p>No Image</p>
+                {% endif %}
             </td>
             <td>
                     <a href="{% url 'peertotur:peertotur_detail' f.pk %}" class="btn btn-primary" target="_blank">More Details</a>

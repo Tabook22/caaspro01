@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 # Create your models here.
 
 
@@ -12,18 +13,18 @@ class Peertotur(models.Model):
         ('Grad_Student','Grad_Student'),
     ]
 
-    pname=models.CharField(verbose_name="Name", max_length=200)
-    paddress=models.CharField(verbose_name="Address",max_length=200)
-    pemail=models.CharField(verbose_name="E-mail address", max_length=100)
-    pmajor=models.CharField(verbose_name="Major",max_length=100)
-    pdep=models.CharField(verbose_name="Department",max_length=100)
-    pgpamajor=models.CharField(verbose_name="GPA in major",max_length=10)
-    pgpacum=models.CharField(verbose_name="Cumulative GPA",max_length=100)
+    pname=models.CharField(verbose_name="Name", max_length=200, null=True, blank=True)
+    paddress=models.CharField(verbose_name="Address",max_length=200, null=True, blank=True)
+    pemail=models.CharField(verbose_name="E-mail address", max_length=100, null=True, blank=True)
+    pmajor=models.CharField(verbose_name="Major",max_length=100, null=True, blank=True)
+    pdep=models.CharField(verbose_name="Department",max_length=100, null=True, blank=True)
+    pgpamajor=models.CharField(verbose_name="GPA in major",max_length=10, null=True, blank=True)
+    pgpacum=models.CharField(verbose_name="Cumulative GPA",max_length=10, null=True, blank=True)
     pexgraduate=models.CharField(verbose_name="Expected date of Graduation", max_length=20, null=True, blank=True)
-    reqdate=models.DateTimeField(auto_now_add=True)
-    ptel=models.CharField(verbose_name="Tel",max_length=20)
-    pgsm=models.CharField(verbose_name="GSM",max_length=20)
-    yearofstudy=models.CharField(verbose_name="Year of Study",max_length=20, choices=yearofstudy_choices)
+    reqdate=models.DateTimeField(auto_now=True)
+    ptel=models.CharField(verbose_name="Tel",max_length=20, null=True, blank=True)
+    pgsm=models.CharField(verbose_name="GSM",max_length=20, null=True, blank=True)
+    yearofstudy=models.CharField(verbose_name="Year of Study",max_length=20, choices=yearofstudy_choices, null=True, blank=True)
     #attchments=models.FileField(upload_to='files/', null=True, verbose_name="")
     pimg=models.ImageField(verbose_name="Image",upload_to='peertoturs/img/', null=True, blank=True) # null let it be null on the database and the blank let let it be blank on the form, because we have form validation, someime it will not allow blancks
     
@@ -40,9 +41,9 @@ class Peertotur(models.Model):
     #also i can use"
     #                def_success_url(self): 
                         #return '/'
-    # def get_absolute_url(self):
-    #     #here the reverse function is to go to peertotur_detail view
-    #     return reverse('peertotur:peertotur_list', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+        #here the reverse function is to go to peertotur_detail view
+        return reverse('peertotur:peertotur_detail', kwargs={'pk': self.pk})
 
 class Peertoturexperties(models.Model):
     pname=models.ForeignKey('Peertotur', on_delete=models.CASCADE)

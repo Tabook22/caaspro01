@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Peertotur, Peertoturfile
 from .forms import PeertoturForm, FileForm
@@ -58,18 +58,30 @@ def upload_delete(request, pk):
     return redirect('peertotur:upload_list')
 
 class add_peertotur(CreateView):
-   #model=Peertotur
-    print("---------------------- am here ---------------------")
-    form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
-    template_name="peertotur/add_peertotur.html"
-    #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
-    #success_url = reverse_lazy('peertotur:peertotur_list')
-    queryset = Peertotur.objects.all()
-    print(queryset)
+    def get(self, request, *args, **kwargs):
+        context = {'form': PeertoturForm()}
+        return render(request, 'peertotur/add_peertotur.html', context)
 
-    def from_valid(self, form):
-        #print(form.instance.user)=request.user # the user
-        return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+        #form = BlogEditForm(request.POST, request.FILES, instance=blog)
+        form = PeertoturForm(request.POST, request.FILES)
+        if form.is_valid():
+            peer = form.save()
+            peer.save()
+            return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_list'))
+        return render(request, 'peertotur/peertotur_list.html', {'form': form})
+
+
+
+    # model=Peertotur
+    # form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
+    # template_name="peertotur/add_peertotur.html"
+    # #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
+    # #success_url = reverse_lazy('peertotur:peertotur_list')
+    # queryset = Peertotur.objects.all()
+    # def from_valid(self, form):
+    #     #print(form.instance.user)=request.user # the user
+    #     return super().form_valid(form)
 
 # Notice: the primary funciton of DetailView is to redern view from a specific object
 class peertotur_detail(DetailView):
