@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_
 from django.urls import reverse_lazy
 from .models import Peertotur, Peertoturfile
 from .forms import PeertoturForm, FileForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.core.files.storage import FileSystemStorage # to save the file in the filesytem not in the database
 
@@ -98,8 +99,9 @@ class peertotur_detail(DetailView):
 class peertotur_list(ListView):
     model=Peertotur
     templat_name="peertotur/peertotur_list.html"
-    #peertoturlist=Peertotur.objects.get()
     context_object_name="peertoturlist"
+    paginate_by = 5
+    queryset = Peertotur.objects.all()  # Default: Model.objects.all()
 
 class peertotur_delete(DeleteView):
     model=Peertotur
