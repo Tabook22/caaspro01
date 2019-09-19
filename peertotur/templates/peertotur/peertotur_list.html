@@ -5,13 +5,22 @@
 <p>
     <a href="{% url 'peertotur:add_peertotur' %}" class="btn btn-primary">Add New Peertotur</a>
 </p>
+<div>
+    <form  method="GET">
+     {{ filter.form }}   
+     <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    
+</div>
 <table class="table">
     <thead>
         <tr>
             <th></th>
             <th></th>
             <th></th>
-            <th>  </th>
+            <th></th>
+            <th> </th>
             <th></th>
         </tr>
     </thead>
@@ -19,6 +28,7 @@
         {% for f in peertoturlist %}
         <tr>
             <td>{{ forloop.counter }}</td>
+            <td>{{ f.reqdate|date:"D, d M, Y"}}</td>
             <td>
                  {{ f.pname}}
             </td>
@@ -46,6 +56,21 @@
 </table>
 
 {% if is_paginated %}
+  <nav aria-label="Page navigation conatiner"></nav>
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+    {% endif %}
+  </ul>
+  </nav>
+</div>
+{% endif %}
+
+<!-- {% if is_paginated %}
   <ul class="pagination">
     {% if page_obj.has_previous %}
       <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
@@ -65,7 +90,6 @@
       <li class="disabled"><span>&raquo;</span></li>
     {% endif %}
   </ul>
-{% endif %}
-
+{% endif %} -->
 
 {% endblock %}

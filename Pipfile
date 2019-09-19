@@ -12,6 +12,7 @@ django-crispy-forms = "*"
 pillow = "*"
 faker = "*"
 django-widget-tweaks = "*"
+django-filter = "*"
 
 [dev-packages]
 autopep8 = "*"

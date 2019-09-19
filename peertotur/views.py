@@ -6,6 +6,18 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.core.files.storage import FileSystemStorage # to save the file in the filesytem not in the database
 
+from .filters import PeerFilter
+
+class PeerFilterListView(ListView):
+    model: Peertotur
+    templat_name="peertotur/peertotur_list.html"
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(*kwargs)
+        context['filter']=PeerFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
+
 
 def showfile(request):
     lastfile = Peertoturfile.objects.last()
@@ -96,13 +108,33 @@ class peertotur_detail(DetailView):
             id_=self.kwargs.get("id") #this is the actual id which passed through the url
             return get_object_or_404(Peertotur, id=id_)
 
+# class search_peer_listuser_name():
+#     def__init__(self,peer_name,*args, **kwargs):
+        
+#     def get(self,request, *args, **kwargs):
+#         getpeer=Peertotur.objects.filter(pname=peer_name)
+
 class peertotur_list(ListView):
+    #The Django ListView class comes with built-in support for pagination so all we need to do 
+    # is take advantage of it. Pagination is controlled by the GET parameter that controls 
+    # which page to show.
+
     model=Peertotur
     templat_name="peertotur/peertotur_list.html"
     context_object_name="peertoturlist"
+    # paginate_by takes an integer specifying how many objects should be displayed per page. 
+    # If this is given, the view will paginate objects with paginate_by objects per page. 
+    # The view will expect either a page query string parameter (via request.GET) or a page 
+    # variable specified in the URLconf.
     paginate_by = 5
+    # I can also use filter
+    #queryset = Peertotur.objects.filter(pmajor="computer science").order_by('-reqdate')
     queryset = Peertotur.objects.all()  # Default: Model.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(*kwargs)
+        context['filter']=PeerFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 class peertotur_delete(DeleteView):
     model=Peertotur
     templat_name="peertotur/peertotur_delete.html"

@@ -21,13 +21,17 @@ class Peertotur(models.Model):
     pgpamajor=models.CharField(verbose_name="GPA in major",max_length=10, null=True, blank=True)
     pgpacum=models.CharField(verbose_name="Cumulative GPA",max_length=10, null=True, blank=True)
     pexgraduate=models.CharField(verbose_name="Expected date of Graduation", max_length=20, null=True, blank=True)
-    reqdate=models.DateTimeField(auto_now=True)
+    reqdate=models.DateTimeField(auto_now_add=True)
     ptel=models.CharField(verbose_name="Tel",max_length=20, null=True, blank=True)
     pgsm=models.CharField(verbose_name="GSM",max_length=20, null=True, blank=True)
     yearofstudy=models.CharField(verbose_name="Year of Study",max_length=20, choices=yearofstudy_choices, null=True, blank=True)
     #attchments=models.FileField(upload_to='files/', null=True, verbose_name="")
     pimg=models.ImageField(verbose_name="Image",upload_to='peertoturs/img/', null=True, blank=True) # null let it be null on the database and the blank let let it be blank on the form, because we have form validation, someime it will not allow blancks
     
+    class Meta:
+        ordering = ['-reqdate'] # ordring by reqdate descending
+
+
     def __str__(self):
         return self.pname
 
