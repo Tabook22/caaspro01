@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load widget_tweaks %}
+{% block content%}
+{% load crispy_forms_tags %}
+<h2>Add Peertotur Experties</h2>
+<form method="POST" enctype="multipart/form-data">
+  {% crispy form %}
+</form>
+<div class="row">
+  <a href="{% url 'peertotur:peertotur_exp_list' %}" class="btn btn-primary btn-sm"><i class="fas fa-user-times"></i>Peer Toturs Experties List</a>
+</div>
+<!-- <table class="table">
+  <thead>
+    <tr>
+      <th>dddd</th>
+      <th> ddd</th>
+      <th>ddd</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for f in queryset %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+
+      <td>
+        {{ f.coursecode }}
+      </td>
+      <td>
+        {{ f.coursename }}
+      </td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table> -->
+
+{% if is_paginated %}
+<nav aria-label="Page navigation conatiner"></nav>
+<ul class="pagination justify-content-center">
+  {% if page_obj.has_previous %}
+  <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+  {% endif %}
+  {% if page_obj.has_next %}
+  <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+  {% endif %}
+</ul>
+</nav>
+</div>
+{% endif %}
+
+{% endblock %}

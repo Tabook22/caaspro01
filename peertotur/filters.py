@@ -1,5 +1,5 @@
 import django_filters
-from .models import Peertotur
+from .models import Peertotur, Peertoturexperties
 
 
 class PeerFilter(django_filters.FilterSet):
@@ -15,6 +15,26 @@ class PeerFilter(django_filters.FilterSet):
         fields = {
             'pname': ['icontains'],
             'pgsm': ['icontains'],
+            # 'pmajor': ['icontains'],
+        }
+
+    def filter_by_ordering(self, queryset, name, value):
+        expression = 'reqdate' if value == 'ascending' else '-reqdate'
+        return queryset.order_by(expression)
+
+class PeerExpFilter(django_filters.FilterSet):
+    CHOICES = (
+        ('ascending', 'Ascending'),
+        ('descending', 'Descending')
+    )
+    ordering = django_filters.ChoiceFilter(
+        label='Ordering', choices=CHOICES, method='filter_by_ordering')
+
+    class Meta:
+        model = Peertoturexperties
+        fields = {
+            'coursename': ['icontains'],
+            'coursecode': ['icontains'],
             # 'pmajor': ['icontains'],
         }
 

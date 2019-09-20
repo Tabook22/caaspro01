@@ -2,23 +2,58 @@
 <!-- Side Bar -->
 
 
-<!-- Begin page content -->
+<li Begin page content -->
 <main role="main" class="flex-shrink-0">
    <div class="container">
-      <div class="col-4">
-         <div class="sidenav">
-            <a href="/">Home</a>
-            <a href="/create">Create</a>
-            <a href="/view">View</a>
-            <a href=""></a>
-         </div>
-      </div>
-      <div class="col-8">
-         <h1>My Site</h1>
-         <hr class="mt-0 mb-4">
-         {% block content %}
-         {% endblock %}
-      </div>
+         <div class="row">
+               <div class="col-2 collapse d-md-flex bg-light pt-2 min-vh-100" id="sidebar">
+                   <ul class="nav flex-column flex-nowrap">
+                       <li class="nav-item"><a class="nav-link" href="/"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                       <li class="nav-item">
+                           <a class="nav-link collapsed" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="fa fa-list">Peertoturs </i></a>
+                           <div class="collapse" id="submenu1" aria-expanded="false">
+                               <ul class="flex-column pl-2 nav">
+                                   <li class="nav-item"><a class="nav-link py-0" href="/peertoturs/addpeertotur"><i class="fas fa-user-plus"></i>Add New</a></li>
+                                   <li class="nav-item">
+                                       <a class="nav-link py-0" href="/peertoturs/peertotur_experties">
+                                             <i class="fab fa-buromobelexperte"></i> expertise
+                                       </a>
+                                   </li>
+                                   <li class="nav-item">
+                                       <a class="nav-link collapsed py-1" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1"><i class="fas fa-paperclip"></i>Attachment</a>
+                                       <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                                           <ul class="flex-column nav pl-4">
+                                               <li class="nav-item">
+                                                   <a class="nav-link p-1" href="#">
+                                                      <i class="fas fa-file-upload"></i> Upload Files
+                                                   </a>
+                                               </li>
+                                               <li class="nav-item">
+                                                   <a class="nav-link p-1" href="#">
+                                                         <i class="fas fa-file-image"></i> Upload Image
+                                                   </a>
+                                               </li>
+                                              <!--  <li class="nav-item">
+                                                   <a class="nav-link p-1" href="#">
+                                                       <i class="fa fa-fw fa-compass"></i> Areas
+                                                   </a>
+                                               </li> -->
+                                           </ul>
+                                       </div>
+                                   </li>
+                               </ul>
+                           </div>
+                       </li>
+                       <li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
+                       <li class="nav-item"><a class="nav-link" href="#">Export</a></li>
+                   </ul>
+               </div>
+               <div class="col pt-2">
+                     {% block content %}
+                     {% endblock %}
+               </div>
+           </div>
+       </div>
    </div>
 </main>
 {% include "partials/_footer.html" %}

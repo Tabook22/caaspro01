@@ -36,9 +36,9 @@ class Peertotur(models.Model):
     yearofstudy = models.CharField(
         verbose_name="Year of Study", max_length=20, choices=yearofstudy_choices, null=True, blank=True)
     #attchments=models.FileField(upload_to='files/', null=True, verbose_name="")
-    # null let it be null on the database and the blank let let it be blank on the form, because we have form validation, someime it will not allow blancks
+    # null let it be null on tshe database and the blank let let it be blank on the form, because we have form validation, someime it will not allow blancks
     pimg = models.ImageField(
-        verbose_name="Image", upload_to='peertoturs/img/', null=True, blank=True)
+        verbose_name="Peer Totur Image", upload_to='peertoturs/img/%Y/%m/%d', null=True, blank=True)
 
     class Meta:
         ordering = ['-reqdate']  # ordring by reqdate descending
@@ -62,15 +62,21 @@ class Peertotur(models.Model):
 
 
 class Peertoturexperties(models.Model):
-    pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)
-    coursename = models.CharField(max_length=200)
-    coursecode = models.CharField(max_length=10)
-    fp = models.BooleanField(default=False)
-    un = models.BooleanField(default=False)
+    pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE, verbose_name="Peer Totur List")
+    coursename = models.CharField(verbose_name="Course Name",max_length=200, null=True, blank=True)
+    coursecode = models.CharField(verbose_name="Course Code",max_length=10, null=True, blank=True)
+    fp = models.BooleanField(default=False ,null=True, blank=True)
+    # un = models.BooleanField(default=False, null=True, blank=True)
+
+    class Meta:
+        ordering = ['coursename']  # ordring by reqdate descending
 
     def __str__(self):
         return self.coursecode + " " + self.coursename
 
+    # here we use this to delete the uploaded peertotur experties
+    def delete(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
 
 class Peertoturq(models.Model):
     pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)

@@ -3,7 +3,7 @@ from django.urls import reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Submit, Row, Column, Field
-from .models import Peertotur, Peertoturfile
+from .models import Peertotur, Peertoturfile, Peertoturexperties
 
 class PeertoturForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -59,6 +59,45 @@ class PeertoturForm(forms.ModelForm):
             'pimg'
         ]
 
+
+
+
+
+class PeertoturExpForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PeertoturExpForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.form_action = reverse('peertotur:peertotur_experties')
+        self.helper.layout = Layout(
+            Row(
+                Column('pname',css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('coursename', css_class='form-group col-md-6 mb-0'),
+                Column('coursecode', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('fp',css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+            # Row(
+            #     Column('un',css_class='form-group col-md-12 mb-0'),
+            #     css_class='form-row'
+            # ),
+            Submit('submit', 'Add area(s) of experties')
+        )
+    
+    class Meta:
+        model=Peertoturexperties
+        fields=[
+            'pname',
+            'coursename',
+            'coursecode',
+            'fp'
+        ]
 
 
 

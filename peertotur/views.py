@@ -1,16 +1,25 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from .models import Peertotur, Peertoturfile
-from .forms import PeertoturForm, FileForm
+from .models import Peertotur, Peertoturfile, Peertoturexperties
+from .forms import PeertoturForm, FileForm, PeertoturExpForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
 from django.core.files.storage import FileSystemStorage # to save the file in the filesytem not in the database
 
-from .filters import PeerFilter
+from .filters import PeerFilter, PeerExpFilter
 
 class PeerFilterListView(ListView):
     model: Peertotur
     templat_name="peertotur/peertotur_list.html"
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(*kwargs)
+        context['filter']=PeerFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
+class PeerExpFilterListView(ListView):
+    model: Peertoturexperties
+    templat_name="peertotur/peertotur_exp_list.html"
 
     def get_context_data(self, **kwargs):
         context=super().get_context_data(*kwargs)
@@ -166,6 +175,38 @@ class peertotur_update(UpdateView):
        # return get_object_or_404(Peertotur, id=id)
 
 
+class peertotur_experties(CreateView):
+
+    def get(self, request, *args, **kwargs):
+        context = {'form': PeertoturExpForm()}
+        return render(request, 'peertotur/peertotur_experties.html', context)
+
+    def post(self, request, *args, **kwargs):
+        #form = BlogEditForm(request.POST, request.FILES, instance=blog)
+        form = PeertoturExpForm(request.POST)
+
+        if form.is_valid():
+            peer = form.save()
+            peer.save()
+            return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_list'))
+  
+        return render(request, 'peertotur/peertotur_list.html', {'form': form})
+
+class peertotur_exp_list(ListView):
+    model=Peertoturexperties
+    template_name="peertotur/peertotur_exp_list.html"
+    context_object_name="peertoturlist"
+    queryset = Peertoturexperties.objects.all()  # Default: Model.objects.all()
+
+    paginate_by = 5
+    # I can also use filter
+    #queryset = Peertotur.objects.filter(pmajor="computer science").order_by('-reqdate')
+   
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(*kwargs)
+        context['filter']=PeerExpFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 class uploadfiles(CreateView):
     model: Peertoturfile
     form_class = FileForm
