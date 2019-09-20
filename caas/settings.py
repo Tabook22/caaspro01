@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'peertotur.apps.PeertoturConfig',
     'django_filters',
+    'bootstrapform',
+    'widget_tweaks',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -124,20 +126,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#points to the static file folder on the project root directory
+# points to the static file folder on the project root directory
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'main/static') #This determines the locations where other static files are being pulled from. For 
+    # This determines the locations where other static files are being pulled from. For
+    os.path.join(BASE_DIR, 'main/static')
     #os.path.join(BASE_DIR, 'otherapp/otherfiles/')
 ]
-#location where django collect all static files
-STATIC_ROOT = os.path.join(BASE_DIR,'static') #This generates the directory where files static files are placed when you run ./manage.py collectstatic
+# location where django collect all static files
+# This generates the directory where files static files are placed when you run ./manage.py collectstatic
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # MEDIA
-MEDIA_ROOT = os.path.join(BASE_DIR,"media") # here is where we want djanog to save uploaded files
-MEDIA_URL= '/media/'  #this is how we want to serve those files
+# here is where we want djanog to save uploaded files
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'  # this is how we want to serve those files
 
-CRISPY_TEMPLATE_PACK="bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-#Redirect when we click on login button
-LOGIN_REDIRECT_URL="/"
-LOGOUT_REDIRECT_URL="/" 
+# Redirect when we click on login button
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
