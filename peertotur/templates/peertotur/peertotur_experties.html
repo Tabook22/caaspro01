@@ -5,43 +5,20 @@
 {% load crispy_forms_tags %}
 <h2>Add Peertotur Experties</h2>
 <div class="row">
-<div class="col-12 rounded border m-2 pb-2">
-<form method="POST" enctype="multipart/form-data">
-  {% crispy form %}
-</form>
-</div>
+  <div class="col-12 rounded border m-2 pb-2">
+    <form method="POST" enctype="multipart/form-data">
+      {% crispy form %}
+    </form>
+  </div>
 </div>
 
 <div class="row">
-<div class="col-12 mt-2" >
-  <a href="{% url 'peertotur:peertotur_exp_list' %}" class="btn btn-primary"><i class="fa fa-list"></i>Peer Toturs Experties List</a>
-</div>
+  <div class="col-12 mt-2">
+    <a href="{% url 'peertotur:peertotur_exp_list' %}" class="btn btn-primary"><i class="fa fa-list"></i>Peer Toturs
+      Experties List</a>
+  </div>
 
 </div>
-<!-- <table class="table">
-  <thead>
-    <tr>
-      <th>dddd</th>
-      <th> ddd</th>
-      <th>ddd</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for f in queryset %}
-    <tr>
-      <td>{{ forloop.counter }}</td>
-
-      <td>
-        {{ f.coursecode }}
-      </td>
-      <td>
-        {{ f.coursename }}
-      </td>
-
-    </tr>
-    {% endfor %}
-  </tbody>
-</table> -->
 
 {% if is_paginated %}
 <nav aria-label="Page navigation conatiner"></nav>
