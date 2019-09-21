@@ -193,20 +193,24 @@ class peertotur_experties(CreateView):
         return render(request, 'peertotur/peertotur_list.html', {'form': form})
 
 class peertotur_exp_list(ListView):
-    model=Peertoturexperties
-    template_name="peertotur/peertotur_exp_list.html"
-    context_object_name="peertoturlist"
-    queryset = Peertoturexperties.objects.all()  # Default: Model.objects.all()
-
+    model = Peertoturexperties
+    template_name = 'peertotur/peertotur_exp_list.html'  # Default: <app_label>/<model_name>_list.html
+    context_object_name = 'peerexp'  # Default: object_list
     paginate_by = 5
-    # I can also use filter
-    #queryset = Peertotur.objects.filter(pmajor="computer science").order_by('-reqdate')
+    queryset = Peertoturexperties.objects.all()  # Default: Model.objects.all()
+    # #model=Peertoturexperties
+    # template_name="peertotur/peertotur_exp_list.html"
+    # #context_object_name="peertoturlist"
+    # queryset = Peertoturexperties.objects.all()  # Default: Model.objects.all()
+    # paginate_by = 5
+    # # I can also use filter
+    # #queryset = Peertotur.objects.filter(pmajor="computer science").order_by('-reqdate')
    
 
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(*kwargs)
-        context['filter']=PeerExpFilter(self.request.GET, queryset=self.get_queryset())
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context=super().get_context_data(*kwargs)
+    #     context['filter']=PeerExpFilter(self.request.GET, queryset=self.get_queryset())
+    #     return context
 class uploadfiles(CreateView):
     model: Peertoturfile
     form_class = FileForm
