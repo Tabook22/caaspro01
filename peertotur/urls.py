@@ -11,7 +11,9 @@ from .views import (upload,
                     peertotur_update,
                     peertotur_detail,
                     peertotur_experties,
-                    peertotur_exp_list)
+                    peertotur_exp_list,
+                    peertoturexp_update,
+                    peertoturexp_delete)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -25,7 +27,9 @@ urlpatterns = [
     path('peertotur_list', peertotur_list.as_view(), name="peertotur_list"),
     path('peertotur_detail/<int:id>/', peertotur_detail.as_view(), name="peertotur_detail"),
     path('peertotur_delete/<int:pk>', peertotur_delete.as_view(), name="peertotur_delete"),
+    path('peertoturexp_delete/<int:pk>', peertoturexp_delete.as_view(), name="peertoturexp_delete"),
     path('peertotur_update/<int:id>/', peertotur_update.as_view(), name='peertotur_update'),
+    path('peertoturexp_update/<int:id>/', peertoturexp_update.as_view(), name='peertoturexp_update'),
     path('upload_delete/<int:pk>', upload_delete, name="upload_delete"),
     path('class/filelst/', uploadfilelst.as_view(), name='filelsts'),
     path('class/fileupload/', uploadfiles.as_view(), name='class_fileupload'),

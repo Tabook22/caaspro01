@@ -60,6 +60,40 @@ class PeertoturForm(forms.ModelForm):
         ]
 
 
+class PeertoturExpForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PeertoturExpForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_method = 'post'
+        self.helper.form_action = reverse('peertotur:peertotur_exp_list')
+        self.helper.layout = Layout(
+            Row(
+                Column('pname', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('coursename', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('coursecode',css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('fp',css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+            Submit('submit', 'Sign in')
+        )
+    
+    class Meta:
+        model=Peertoturexperties
+        fields=[
+            'pname',
+            'coursename',
+            'coursecode',
+            'fp'
+        ]
 
 
 

@@ -33,11 +33,12 @@ class PeerExpFilter(django_filters.FilterSet):
     class Meta:
         model = Peertoturexperties
         fields = {
+            'pname':['in'], #because it is a list of fileds
             'coursename': ['icontains'],
             'coursecode': ['icontains'],
             # 'pmajor': ['icontains'],
         }
 
     def filter_by_ordering(self, queryset, name, value):
-        expression = 'reqdate' if value == 'ascending' else '-reqdate'
+        expression = 'coursename' if value == 'ascending' else 'coursename'
         return queryset.order_by(expression)

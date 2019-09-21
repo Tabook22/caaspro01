@@ -7,36 +7,57 @@
     <a href="" data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a>
     Peertotur experties list
 </h2>
+
 <div class="row">
-<div class="col-12 rounded border m-2 pb-2">
-<table class="table">
-    <thead>
-        <tr>
-            <th>No.</th>
-            <th>Course Name</th>
-            <th>Course Code</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for f in peerexp %}
-        <tr>
-          
-                <td></td>
-               <!-- {{ forloop.counter }}  -->
-          
+    <div class="col-12 rounded border m-2 pb-2">
+        <form method="GET">
+            {{ filterexp.form|bootstrap }}
 
-            <td>
-                {{ f.coursecode }}
-            </td>
-            <td>
-                {{ f.coursename }}
-            </td>
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </form>
 
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-12 rounded border m-2 pb-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Peer Totur Name</th>
+                    <th>Course Name</th>
+                    <th>Course Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in filterexp.qs %}
+                <tr>
+                    <td> {{ forloop.counter }} </td>
+                    <td>{{ f.pname }}</td>
+
+                    <td>
+                        {{ f.coursename }}
+                    </td>
+                    <td>
+                        {{ f.coursecode }}
+                    </td>
+                    <td>
+                            <a href="{% url 'peertotur:peertoturexp_update' f.pk %}" class="btn btn-primary " target="_blank"><i class="far fa-file-alt"></i></a>
+                        </td>
+                    <td>
+                        <form method="POST" action="{% url 'peertotur:peertoturexp_delete' f.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger " ><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% if is_paginated %}
 <nav aria-label="Page navigation conatiner"></nav>
