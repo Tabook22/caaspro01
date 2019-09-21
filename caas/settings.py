@@ -129,7 +129,8 @@ STATIC_URL = '/static/'
 # points to the static file folder on the project root directory
 STATICFILES_DIRS = [
     # This determines the locations where other static files are being pulled from. For
-    os.path.join(BASE_DIR, 'main/static')
+    os.path.join(BASE_DIR, 'main/static'),
+    os.path.join(BASE_DIR, 'peertotur/static')
     #os.path.join(BASE_DIR, 'otherapp/otherfiles/')
 ]
 # location where django collect all static files

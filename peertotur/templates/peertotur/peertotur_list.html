@@ -6,7 +6,8 @@
 <p>
     <a href="{% url 'peertotur:add_peertotur' %}" class="btn btn-primary">Add New Peertotur</a>
 </p>
-<div>
+<div class="row">
+<div class="col-12 rounded border m-2 pb-2">
     <form  method="GET">
      {{ filter.form|bootstrap }}   
     
@@ -15,8 +16,11 @@
       </button>
     </form>
 
-    
+</div>  
 </div>
+
+<div class="row">
+<div class="col-12 rounded border m-2 pb-2">
 <table class="table">
     <thead>
         <tr>
@@ -46,19 +50,20 @@
                 {% endif %}
             </td>
             <td>
-                    <a href="{% url 'peertotur:peertotur_detail' f.pk %}" class="btn btn-primary" target="_blank">More Details</a>
+                    <a href="{% url 'peertotur:peertotur_detail' f.pk %}" class="btn btn-primary " target="_blank"><i class="far fa-file-alt"></i></a>
                 </td>
             <td>
                 <form method="POST" action="{% url 'peertotur:peertotur_delete' f.pk %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm" >Delete File</button>
+                    <button type="submit" class="btn btn-danger " ><i class="far fa-trash-alt"></i></button>
                 </form>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-
+</div>
+</div>
 {% if is_paginated %}
   <nav aria-label="Page navigation conatiner"></nav>
   <ul class="pagination justify-content-center">
