@@ -62,10 +62,13 @@ class Peertotur(models.Model):
 
 
 class Peertoturexperties(models.Model):
-    pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE, verbose_name="Peer Totur List")
-    coursename = models.CharField(verbose_name="Course Name",max_length=200, null=True, blank=True)
-    coursecode = models.CharField(verbose_name="Course Code",max_length=10, null=True, blank=True)
-    fp = models.BooleanField(default=False ,null=True, blank=True)
+    pname = models.ForeignKey(
+        'Peertotur', on_delete=models.CASCADE, verbose_name="Peer Totur List")
+    coursename = models.CharField(
+        verbose_name="Course Name", max_length=200, null=True, blank=True)
+    coursecode = models.CharField(
+        verbose_name="Course Code", max_length=10, null=True, blank=True)
+    fp = models.BooleanField(default=False, null=True, blank=True)
     # un = models.BooleanField(default=False, null=True, blank=True)
 
     class Meta:
@@ -75,8 +78,9 @@ class Peertoturexperties(models.Model):
         return self.coursecode + " " + self.coursename
 
     # here we use this to delete the uploaded peertotur experties
-    def delete(self, *args, **kwargs):
-        super().delete(*args, **kwargs)
+    # def delete(self, *args, **kwargs):
+    #     super().delete(*args, **kwargs)
+
 
 class Peertoturq(models.Model):
     pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)

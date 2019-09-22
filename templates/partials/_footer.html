@@ -13,6 +13,21 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 
+
+<script>
+    {% comment %} $(document).on('click', '.confirm-delete', function(){
+        return confirm('Are you sure you want to delete this?');
+    })  {% endcomment %}
+
+    $(document).on('click', '.confirm-delete', function () {
+  $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+});
+
+$(document).on('click', '#confirmDeleteButtonModal', function () {
+  var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+  window.location = $("#".concat(caller)).attr("href");
+});
+</script>
 </body>
 
 </html>

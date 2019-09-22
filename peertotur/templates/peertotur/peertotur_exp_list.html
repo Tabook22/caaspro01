@@ -2,7 +2,6 @@
 {% load bootstrap %}
 {% load widget_tweaks %}
 {% block content%}
-
 <h2>
     <a href="" data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a>
     Peertotur experties list
@@ -48,10 +47,19 @@
                             <a href="{% url 'peertotur:peertoturexp_update' f.pk %}" class="btn btn-primary " target="_blank"><i class="far fa-file-alt"></i></a>
                         </td>
                     <td>
-                        <form method="POST" action="{% url 'peertotur:peertoturexp_delete' f.pk %}">
+                    <!-- <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{question.id}}">
+                     <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="btn btn-danger confirm-delete" > 
+                    <i class="far fa-trash-alt"></i>
+                    </a>-->
+
+                         <form method="POST" action="{% url 'peertotur:peertoturexp_delete' f.pk %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger " ><i class="far fa-trash-alt"></i></button>
-                        </form>
+                            <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{question.id}}">
+                    {% comment %} <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="btn btn-danger confirm-delete" > {% endcomment %}
+                    <i class="far fa-trash-alt"></i>
+                    </a>
+                            {% comment %} <button type="submit" class="btn btn-danger " ><i class="far fa-trash-alt"></i></button> {% endcomment %}
+                        </form> 
                     </td>
                 </tr>
                 {% endfor %}

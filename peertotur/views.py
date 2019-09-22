@@ -4,27 +4,33 @@ from .models import Peertotur, Peertoturfile, Peertoturexperties
 from .forms import PeertoturForm, FileForm, PeertoturExpForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
-from django.core.files.storage import FileSystemStorage # to save the file in the filesytem not in the database
+# to save the file in the filesytem not in the database
+from django.core.files.storage import FileSystemStorage
 
 from .filters import PeerFilter, PeerExpFilter
 
+
 class PeerFilterListView(ListView):
     model: Peertotur
-    templat_name="peertotur/peertotur_list.html"
+    templat_name = "peertotur/peertotur_list.html"
 
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(*kwargs)
-        context['filter']=PeerFilter(self.request.GET, queryset=self.get_queryset())
+        context = super().get_context_data(*kwargs)
+        context['filter'] = PeerFilter(
+            self.request.GET, queryset=self.get_queryset())
         return context
+
 
 class PeerExpFilterListView(ListView):
     model: Peertoturexperties
-    templat_name="peertotur/peertotur_exp_list.html"
+    templat_name = "peertotur/peertotur_exp_list.html"
 
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(*kwargs)
-        context['filter']=PeerExpFilter(self.request.GET, queryset=self.get_queryset())
+        context = super().get_context_data(*kwargs)
+        context['filter'] = PeerExpFilter(
+            self.request.GET, queryset=self.get_queryset())
         return context
+
 
 def showfile(request):
     lastfile = Peertoturfile.objects.last()
@@ -39,6 +45,7 @@ def showfile(request):
                }
     return render(request, 'peertutor/files.html', context)
 
+
 def upload(request):
     context = {}
     if request.method == "POST":
@@ -50,10 +57,12 @@ def upload(request):
         context['url'] = fs.url(fname)
     return render(request, 'peertotur/upload.html', context)
 
+
 def upload_list(request):
     uploadedfiles = Peertoturfile.objects.all()
     print(uploadedfiles)
     return render(request, 'peertotur/upload_list.html', {'uploadedfiles': uploadedfiles})
+
 
 def upload_file(request):
     if request.method == "POST":
@@ -68,11 +77,14 @@ def upload_file(request):
     context['form'] = form
     return render(request, 'peertotur/upload_file.html', context)
 
+
 def upload_delete(request, pk):
-    if request.method=="POST":
-        peertoturfile=Peertoturfile.objects.get(pk=pk)
+    if request.method == "POST":
+        peertoturfile = Peertoturfile.objects.get(pk=pk)
         peertoturfile.delete()
     return redirect('peertotur:upload_list')
+
+
 class add_peertotur(CreateView):
     def get(self, request, *args, **kwargs):
         context = {'form': PeertoturForm()}
@@ -87,8 +99,6 @@ class add_peertotur(CreateView):
             return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_list'))
         return render(request, 'peertotur/peertotur_list.html', {'form': form})
 
-
-
     # model=Peertotur
     # form_class=PeertoturForm # because if am going to use the form i have to close the fields forms and fields can't be used at the same time
     # template_name="peertotur/add_peertotur.html"
@@ -100,34 +110,38 @@ class add_peertotur(CreateView):
     #     return super().form_valid(form)
 
 # Notice: the primary funciton of DetailView is to redern view from a specific object
+
+
 class peertotur_detail(DetailView):
-    template_name="peertotur/peertotur_detail.html"
-    context_object_name="peer"
-    #queryset=Peertotur.objects.all() # there is not need for this because inside urls.py we changed the <int:pk> to <int:id>, and then we have the use the bellow function 
+    template_name = "peertotur/peertotur_detail.html"
+    context_object_name = "peer"
+    # queryset=Peertotur.objects.all() # there is not need for this because inside urls.py we changed the <int:pk> to <int:id>, and then we have the use the bellow function
     # def get_object(self), which will return to us the needed record based up on the id we obtained from the url
     # if we are need to use querset=Peeertotur.objects.all() then we have to change back <int:pk> and not use the def get_object(self) method
 
     def get_object(self):
-            id_=self.kwargs.get("id") #this is the actual id which passed through the url
-            return get_object_or_404(Peertotur, id=id_)
+        # this is the actual id which passed through the url
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Peertotur, id=id_)
 
 # class search_peer_listuser_name():
 #     def__init__(self,peer_name,*args, **kwargs):
-        
+
 #     def get(self,request, *args, **kwargs):
 #         getpeer=Peertotur.objects.filter(pname=peer_name)
 
+
 class peertotur_list(ListView):
-    #The Django ListView class comes with built-in support for pagination so all we need to do 
-    # is take advantage of it. Pagination is controlled by the GET parameter that controls 
+    # The Django ListView class comes with built-in support for pagination so all we need to do
+    # is take advantage of it. Pagination is controlled by the GET parameter that controls
     # which page to show.
 
-    model=Peertotur
-    templat_name="peertotur/peertotur_list.html"
-    context_object_name="peertoturlist"
-    # paginate_by takes an integer specifying how many objects should be displayed per page. 
-    # If this is given, the view will paginate objects with paginate_by objects per page. 
-    # The view will expect either a page query string parameter (via request.GET) or a page 
+    model = Peertotur
+    templat_name = "peertotur/peertotur_list.html"
+    context_object_name = "peertoturlist"
+    # paginate_by takes an integer specifying how many objects should be displayed per page.
+    # If this is given, the view will paginate objects with paginate_by objects per page.
+    # The view will expect either a page query string parameter (via request.GET) or a page
     # variable specified in the URLconf.
     paginate_by = 5
     # I can also use filter
@@ -135,63 +149,73 @@ class peertotur_list(ListView):
     queryset = Peertotur.objects.all()  # Default: Model.objects.all()
 
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(*kwargs)
-        context['filter']=PeerFilter(self.request.GET, queryset=self.get_queryset())
+        context = super().get_context_data(*kwargs)
+        context['filter'] = PeerFilter(
+            self.request.GET, queryset=self.get_queryset())
         return context
+
+
 class peertotur_delete(DeleteView):
-    model=Peertotur
-    templat_name="peertotur/peertotur_delete.html"
-    context_object_name="peer"
-    success_url = reverse_lazy('peertotur:peertotur_list')
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
+
+    # model = Peertotur
+    # templat_name = "peertotur/peertotur_delete.html"
+    # context_object_name = "peer"
+    # success_url = reverse_lazy('peertotur:peertotur_list')
+
 
 class peertoturexp_delete(DeleteView):
-    def post(self, request):
-        obj=get_object_or_404(Peertoturexperties, id=id)
-        obj.delete()
+    model = Peertoturexperties
+    # templat_name = "peertotur/peertoturexperties_confirm_delete.html"
     success_url = reverse_lazy('peertotur:peertotur_exp_list')
+
+
 class uploadfilelst(ListView):
     model = Peertoturfile
     template_name = 'peertotur/upload_list.html'
     context_object_name = 'uploadedfiles'
 
+
 class peertotur_update(UpdateView):
-    #model=Peertotur
-    template_name="peertotur/peertotur_update.html"
-    form_class= PeertoturForm
-    #context_object_name="peer"
-    #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
+    # model=Peertotur
+    template_name = "peertotur/peertotur_update.html"
+    form_class = PeertoturForm
+    # context_object_name="peer"
+    # fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
     success_url = reverse_lazy('peertotur:peertotur_list')
 
     def get_object(self):
-        id=self.kwargs.get("id")
+        id = self.kwargs.get("id")
         return get_object_or_404(Peertotur, id=id)
 
     def form_valid(self, form):
         return super().form_valid(form)
 
     # def get_object(self):
-        #id=self.kwargs.get("id")
-       # return get_object_or_404(Peertotur, id=id)
+        # id=self.kwargs.get("id")
+        # return get_object_or_404(Peertotur, id=id)
+
 
 class peertoturexp_update(UpdateView):
-    #model=Peertotur
-    template_name="peertotur/peertoturexp_update.html"
-    form_class= PeertoturExpForm
-    #context_object_name="peer"
-    #fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
+    # model=Peertotur
+    template_name = "peertotur/peertoturexp_update.html"
+    form_class = PeertoturExpForm
+    # context_object_name="peer"
+    # fields=['pname','paddress','pemail','pmajor','pdep','pgpamajor','pgpacum','pexgraduate','ptel','pgsm','yearofstudy','pimg']
     success_url = reverse_lazy('peertotur:peertotur_exp_list')
 
     def get_object(self):
-        id=self.kwargs.get("id")
-        print(f"---------the id is {id}------")
+        id = self.kwargs.get("id")
         return get_object_or_404(Peertoturexperties, id=id)
 
     def form_valid(self, form):
         return super().form_valid(form)
 
     # def get_object(self):
-        #id=self.kwargs.get("id")
-       # return get_object_or_404(Peertotur, id=id)
+        # id=self.kwargs.get("id")
+        # return get_object_or_404(Peertotur, id=id)
+
 
 class peertotur_experties(CreateView):
 
@@ -207,21 +231,26 @@ class peertotur_experties(CreateView):
             peer = form.save()
             peer.save()
             return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_list'))
-  
+
         return render(request, 'peertotur/peertotur_list.html', {'form': form})
+
 
 class peertotur_exp_list(ListView):
     model = Peertoturexperties
-    template_name = 'peertotur/peertotur_exp_list.html'  # Default: <app_label>/<model_name>_list.html
+    # Default: <app_label>/<model_name>_list.html
+    template_name = 'peertotur/peertotur_exp_list.html'
     context_object_name = 'peerexp'  # Default: object_list
     paginate_by = 5
-    
+
     queryset = Peertoturexperties.objects.all()  # Default: Model.objects.all()
-    
+
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(*kwargs)
-        context['filterexp']=PeerExpFilter(self.request.GET, queryset=self.get_queryset())
+        context = super().get_context_data(*kwargs)
+        context['filterexp'] = PeerExpFilter(
+            self.request.GET, queryset=self.get_queryset())
         return context
+
+
 class uploadfiles(CreateView):
     model: Peertoturfile
     form_class = FileForm
