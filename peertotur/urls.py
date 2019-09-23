@@ -13,7 +13,8 @@ from .views import (upload,
                     peertotur_experties,
                     peertotur_exp_list,
                     peertoturexp_update,
-                    peertoturexp_delete)
+                    peertoturexp_delete,
+                    document_detail)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -22,6 +23,7 @@ urlpatterns = [
     path('upload/', upload, name="upload"),
     path('upload_list/', upload_list, name="upload_list"),
     path('addpeertotur/', add_peertotur.as_view(), name="add_peertotur"),
+    path('document_detail', document_detail.as_view(), name="document_detail"),
     path('peertotur_experties', peertotur_experties.as_view(),
          name='peertotur_experties'),
     path('peertotur_exp_list/', peertotur_exp_list.as_view(),

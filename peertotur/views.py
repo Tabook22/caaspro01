@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from .models import Peertotur, Peertoturfile, Peertoturexperties
+from .models import Peertotur, Peertoturfile, Peertoturexperties, Document
 from .forms import PeertoturForm, FileForm, PeertoturExpForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
@@ -164,24 +164,27 @@ class peertotur_delete(DeleteView):
     # context_object_name = "peer"
     # success_url = reverse_lazy('peertotur:peertotur_list')
 
+
 class peertoturexp_delete(DeleteView):
-    #here we are deleting without confirmation page, we did the confirmation using jquery in the html page, 
+    # here we are deleting without confirmation page, we did the confirmation using jquery in the html page,
     # becausse get method will call for the confirmation page, and the post method will do the deletion
-    model=Peertoturexperties
-    success_url=success_url = reverse_lazy("peertotur:peertotur_exp_list")
-    
-    def get(self,request, *args, **kwargs):
+    model = Peertoturexperties
+    success_url = success_url = reverse_lazy("peertotur:peertotur_exp_list")
+
+    def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 
-    #if we used the following code this will use a confirmation page
+    # if we used the following code this will use a confirmation page
     # model = Peertoturexperties
     # # templat_name = "peertotur/peertoturexperties_confirm_delete.html"
     # success_url = reverse_lazy('peertotur:peertotur_exp_list')
+
 
 class uploadfilelst(ListView):
     model = Peertoturfile
     template_name = 'peertotur/upload_list.html'
     context_object_name = 'uploadedfiles'
+
 
 class peertotur_update(UpdateView):
     # model=Peertotur
@@ -202,6 +205,7 @@ class peertotur_update(UpdateView):
         # id=self.kwargs.get("id")
         # return get_object_or_404(Peertotur, id=id)
 
+
 class peertoturexp_update(UpdateView):
     # model=Peertotur
     template_name = "peertotur/peertoturexp_update.html"
@@ -221,6 +225,7 @@ class peertoturexp_update(UpdateView):
         # id=self.kwargs.get("id")
         # return get_object_or_404(Peertotur, id=id)
 
+
 class peertotur_experties(CreateView):
 
     def get(self, request, *args, **kwargs):
@@ -238,6 +243,7 @@ class peertotur_experties(CreateView):
 
         return render(request, 'peertotur/peertotur_exp_list.html', {'form': form})
 
+
 class peertotur_exp_list(ListView):
     model = Peertoturexperties
     # Default: <app_label>/<model_name>_list.html
@@ -253,6 +259,7 @@ class peertotur_exp_list(ListView):
             self.request.GET, queryset=self.get_queryset())
         return context
 
+
 class uploadfiles(CreateView):
     model: Peertoturfile
     form_class = FileForm
@@ -261,3 +268,17 @@ class uploadfiles(CreateView):
     success_url = 'upload_list'
     template_name = 'peertotur/upload_file.html'
     queryset = Peertoturfile.objects.all()
+
+
+class document_detail(CreateView):
+    model = Document
+    fields = ['file']
+    template_name = 'peertotur/document_detail.html'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        if self.request.FILES:
+            for f in self.request.FILES.getlist('file'):
+                obj = self.model.objects.create(file=f)
+
+        return super(document_detail, self).form_valid(form)

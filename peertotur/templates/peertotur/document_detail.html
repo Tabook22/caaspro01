@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content%}
+{% load crispy_forms_tags %}
+<h2>Upload Files</h2>
+<form method="post" action="{% url 'peertotur:document_detail' %}" entype="multipart/form-data"> {% csrf_token %}
+<input type="file" name="files" multiple />
+<input type="submit" value="Upload" />
+{% comment %} <script>
+  $(document).ready(function(){
+    $('#id_file').attr("multiple","true");
+
+  })
+ </script>
+<form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
+ {{ form.file }}
+ <input type="submit" value="upload" /> {% endcomment %}
+
+</form>
+
+{% endblock %}

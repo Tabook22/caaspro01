@@ -110,3 +110,15 @@ class StudentComments(models.Model):
 
     def __str__(self):
         return self.mtitle
+
+
+class Document(models.Model):
+    file = models.FileField('Document', upload_to='peertoturs/mydocs/')
+
+    @property
+    def filename(self):
+        name = self.file.name.split("/")[1].replace('_', ' ').replace('-', ' ')
+        return name
+
+    def get_absolute_url(self):
+        return reverse('peertotur:document_detail', kwargs={'pk': self.pk})
