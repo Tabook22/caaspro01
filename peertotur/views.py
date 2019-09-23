@@ -164,18 +164,24 @@ class peertotur_delete(DeleteView):
     # context_object_name = "peer"
     # success_url = reverse_lazy('peertotur:peertotur_list')
 
-
 class peertoturexp_delete(DeleteView):
-    model = Peertoturexperties
-    # templat_name = "peertotur/peertoturexperties_confirm_delete.html"
-    success_url = reverse_lazy('peertotur:peertotur_exp_list')
+    #here we are deleting without confirmation page, we did the confirmation using jquery in the html page, 
+    # becausse get method will call for the confirmation page, and the post method will do the deletion
+    model=Peertoturexperties
+    success_url=success_url = reverse_lazy("peertotur:peertotur_exp_list")
+    
+    def get(self,request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
 
+    #if we used the following code this will use a confirmation page
+    # model = Peertoturexperties
+    # # templat_name = "peertotur/peertoturexperties_confirm_delete.html"
+    # success_url = reverse_lazy('peertotur:peertotur_exp_list')
 
 class uploadfilelst(ListView):
     model = Peertoturfile
     template_name = 'peertotur/upload_list.html'
     context_object_name = 'uploadedfiles'
-
 
 class peertotur_update(UpdateView):
     # model=Peertotur
@@ -196,7 +202,6 @@ class peertotur_update(UpdateView):
         # id=self.kwargs.get("id")
         # return get_object_or_404(Peertotur, id=id)
 
-
 class peertoturexp_update(UpdateView):
     # model=Peertotur
     template_name = "peertotur/peertoturexp_update.html"
@@ -216,7 +221,6 @@ class peertoturexp_update(UpdateView):
         # id=self.kwargs.get("id")
         # return get_object_or_404(Peertotur, id=id)
 
-
 class peertotur_experties(CreateView):
 
     def get(self, request, *args, **kwargs):
@@ -230,10 +234,9 @@ class peertotur_experties(CreateView):
         if form.is_valid():
             peer = form.save()
             peer.save()
-            return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_list'))
+            return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_exp_list'))
 
-        return render(request, 'peertotur/peertotur_list.html', {'form': form})
-
+        return render(request, 'peertotur/peertotur_exp_list.html', {'form': form})
 
 class peertotur_exp_list(ListView):
     model = Peertoturexperties
@@ -249,7 +252,6 @@ class peertotur_exp_list(ListView):
         context['filterexp'] = PeerExpFilter(
             self.request.GET, queryset=self.get_queryset())
         return context
-
 
 class uploadfiles(CreateView):
     model: Peertoturfile

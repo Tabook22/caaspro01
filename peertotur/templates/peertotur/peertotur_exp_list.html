@@ -44,22 +44,27 @@
                         {{ f.coursecode }}
                     </td>
                     <td>
-                            <a href="{% url 'peertotur:peertoturexp_update' f.pk %}" class="btn btn-primary " target="_blank"><i class="far fa-file-alt"></i></a>
-                        </td>
+                        <a href="{% url 'peertotur:peertoturexp_update' f.pk %}" class="btn btn-primary "
+                            target="_blank"><i class="far fa-file-alt"></i></a>
+                    </td>
                     <td>
-                    <!-- <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{question.id}}">
+                        <!-- <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{question.id}}">
                      <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="btn btn-danger confirm-delete" > 
                     <i class="far fa-trash-alt"></i>
                     </a>-->
 
-                         <form method="POST" action="{% url 'peertotur:peertoturexp_delete' f.pk %}">
+                        <form method="POST" action="{% url 'peertotur:peertoturexp_delete' f.pk %}">
                             {% csrf_token %}
-                            <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal" id="deleteButton{{question.id}}">
-                    {% comment %} <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="btn btn-danger confirm-delete" > {% endcomment %}
-                    <i class="far fa-trash-alt"></i>
-                    </a>
-                            {% comment %} <button type="submit" class="btn btn-danger " ><i class="far fa-trash-alt"></i></button> {% endcomment %}
-                        </form> 
+                            <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}" class="btn btn-danger confirm-delete"
+                                title="Delete" data-toggle="modal" data-target="#confirmDeleteModal"
+                                id="deleteButton{{f.pk}}">
+                                <!-- <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}"
+                                    class="btn btn-danger confirm-delete">-->
+                                    <i class="far fa-trash-alt"></i>
+                            </a>
+                               <!--  <button type="submit" class="btn btn-danger "><i
+                                        class="far fa-trash-alt"></i></button>-->
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
