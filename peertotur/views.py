@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Peertotur, Peertoturfile, Peertoturexperties, Document
-from .forms import PeertoturForm, FileForm, PeertoturExpForm
+from .forms import PeertoturForm, FileForm, PeertoturExpForm, attachmentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
 # to save the file in the filesytem not in the database
@@ -269,16 +269,23 @@ class uploadfiles(CreateView):
     template_name = 'peertotur/upload_file.html'
     queryset = Peertoturfile.objects.all()
 
+# uploading the peet toturs attachments
+
 
 class document_detail(CreateView):
-    model = Document
-    fields = ['file']
+    #model = Document
+    form_class = attachmentForm
+    #fields = ['file']
     template_name = 'peertotur/document_detail.html'
 
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        if self.request.FILES:
-            for f in self.request.FILES.getlist('file'):
-                obj = self.model.objects.create(file=f)
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
-        return super(document_detail, self).form_valid(form)
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            return render(request, self.template_name, {'form': form})

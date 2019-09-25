@@ -113,7 +113,9 @@ class StudentComments(models.Model):
 
 
 class Document(models.Model):
-    file = models.FileField('Document', upload_to='peertoturs/mydocs/')
+    file = models.FileField(
+        'Document', upload_to='peertoturs/mydocs/', null=True, blank=True)
+    dateupload = models.DateTimeField(auto_now_add=True)
 
     @property
     def filename(self):
