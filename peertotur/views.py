@@ -279,12 +279,15 @@ class document_detail(CreateView):
     template_name = 'peertotur/document_detail.html'
 
     def get(self, request, *args, **kwargs):
+        print("-------------------in the name of god most merci most merciful-------------")
         form = self.form_class()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
+        print("-----allah----")
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
+            print("-----in the name of allah-----")
             form.save()
             return HttpResponseRedirect(self.success_url)
         else:
