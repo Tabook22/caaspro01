@@ -14,7 +14,10 @@ from .views import (upload,
                     peertotur_exp_list,
                     peertoturexp_update,
                     peertoturexp_delete,
-                    document_detail)
+                    document_detail,
+                    document_detail_delete,
+                    peertotur_qs_list,
+                    peertotur_qs_delete)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -26,11 +29,14 @@ urlpatterns = [
     path('document_detail/', document_detail.as_view(), name="document_detail"),
     path('peertotur_experties', peertotur_experties.as_view(),
          name='peertotur_experties'),
+    path('peertotur_qs_list/', peertotur_qs_list.as_view(), name="peertotur_qs_list"),
     path('peertotur_exp_list/', peertotur_exp_list.as_view(),
          name="peertotur_exp_list"),
     path('peertotur_list', peertotur_list.as_view(), name="peertotur_list"),
+    path('peertotur_qs_delete/<int:pk>', peertotur_qs_delete.as_view(), name="peertotur_qs_delete"),
     path('peertotur_detail/<int:id>/',
          peertotur_detail.as_view(), name="peertotur_detail"),
+     path('document_detail_delete/<int:pk>', document_detail_delete.as_view(), name="document_detail_delete"),
     path('peertotur_delete/<int:pk>',
          peertotur_delete.as_view(), name="peertotur_delete"),
     path('peertoturexp_delete/<int:pk>',

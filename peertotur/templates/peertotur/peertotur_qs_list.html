@@ -13,7 +13,7 @@
   })
  </script>
 <form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
- {{ form }}
+ {{ form|crispy }}
  <input type="submit" value="upload" /> 
 
 </form>
@@ -24,11 +24,9 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Date Upload</th>
-      <th scope="col">File Title</th>
-      <th scope="col">Peer Totur</th>
-      <th scope="col">File</th>
-      <th scope="col">Delete</th>
+      <th scope="col">Peer Tutor</th>
+      <th scope="col">Question Title</th>
+      <th scope="col">Question Answer</th>
     </tr>
   </thead>
   <tbody>

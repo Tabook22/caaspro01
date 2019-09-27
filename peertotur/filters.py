@@ -1,5 +1,5 @@
 import django_filters
-from .models import Peertotur, Peertoturexperties
+from .models import Peertotur, Peertoturexperties,Document
 
 
 class PeerFilter(django_filters.FilterSet):
@@ -36,6 +36,27 @@ class PeerExpFilter(django_filters.FilterSet):
             'pname':['in'], #because it is a list of fileds
             'coursename': ['icontains'],
             'coursecode': ['icontains'],
+            # 'pmajor': ['icontains'],
+        }
+
+    def filter_by_ordering(self, queryset, name, value):
+        expression = 'coursename' if value == 'ascending' else 'coursename'
+        return queryset.order_by(expression)
+
+
+class PeerUploadFileFilter(django_filters.FilterSet):
+    CHOICES = (
+        ('ascending', 'Ascending'),
+        ('descending', 'Descending')
+    )
+    ordering = django_filters.ChoiceFilter(
+        label='Ordering', choices=CHOICES, method='filter_by_ordering')
+
+    class Meta:
+        model =Document
+        fields = {
+            'pname':['in'], #because it is a list of fileds
+            'dateupload': ['icontains']
             # 'pmajor': ['icontains'],
         }
 

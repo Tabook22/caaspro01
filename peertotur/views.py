@@ -1,13 +1,13 @@
 from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from .models import Peertotur, Peertoturfile, Peertoturexperties, Document
-from .forms import PeertoturForm, FileForm, PeertoturExpForm, attachmentForm
+from .models import Peertotur, Peertoturfile, Peertoturexperties, Document, Peertoturq
+from .forms import PeertoturForm, FileForm, PeertoturExpForm, attachmentForm, PeertoturqsForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView, DetailView
 # to save the file in the filesytem not in the database
 from django.core.files.storage import FileSystemStorage
 
-from .filters import PeerFilter, PeerExpFilter
+from .filters import PeerFilter, PeerExpFilter, PeerUploadFileFilter
 
 
 class PeerFilterListView(ListView):
@@ -278,6 +278,7 @@ class document_detail(CreateView):
     #fields = ['file']
     template_name = 'peertotur/document_detail.html'
     success_url = reverse_lazy('peertotur:document_detail')
+    paginate_by = 5
 
     def get(self, request, *args, **kwargs):
         print("-------------------in the name of god most merci most merciful-------------")
@@ -299,3 +300,57 @@ class document_detail(CreateView):
             return HttpResponseRedirect(self.success_url)
         else:
             return render(request, self.template_name, {'form': form})
+class document_detail_delete(DeleteView):
+   # here we are deleting without confirmation page, we did the confirmation using jquery in the html page,
+    # becausse get method will call for the confirmation page, and the post method will do the deletion
+    model = Document
+    success_url = success_url = reverse_lazy("peertotur:document_detail")
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    # if we used the following code this will use a confirmation page
+    # model = Peertoturexperties
+    # # templat_name = "peertotur/peertoturexperties_confirm_delete.html"
+    # success_url = reverse_lazy('peertotur:peertotur_exp_list')
+
+class peertotur_qs_list(CreateView):
+    model = Peertoturq
+    form_class = PeertoturqsForm
+    #fields = ['file']
+    template_name = 'peertotur/peertotur_qs_list.html'
+    success_url = reverse_lazy('peertotur:peertotur_qs_list.html')
+    paginate_by = 5
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        getAll = Document.objects.all()
+        return render(request, self.template_name, {'form': form, 'flist': getAll})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            # myfile = request.FILES['file']
+            # fs = FileSystemStorage()
+            # filename = fs.save(myfile.name, myfile)
+            # uploaded_file_url = fs.url(filename)
+            # print(uploaded_file_url)
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        else:
+            return render(request, self.template_name, {'form': form})
+class peertotur_qs_delete(DeleteView):
+    # here we are deleting without confirmation page, we did the confirmation using jquery in the html page,
+    # becausse get method will call for the confirmation page, and the post method will do the deletion
+    model = Peertoturq
+    success_url = success_url = reverse_lazy("peertotur:peertotur_qs_list")
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    # if we used the following code this will use a confirmation page
+    # model = Peertoturexperties
+    # # templat_name = "peertotur/peertoturexperties_confirm_delete.html"
+    # success_url = reverse_lazy('peertotur:peertotur_exp_list')
+
+

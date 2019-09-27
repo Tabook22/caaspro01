@@ -84,7 +84,12 @@ class Peertoturexperties(models.Model):
 
 class Peertoturq(models.Model):
     pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)
-    shortq = models.TextField()
+    question1 = models.CharField(verbose_name="Question1",max_length=300, null=True, blank=True)
+    answer1 = models.TextField(verbose_name="Answer1", null=True, blank=True)
+    question2 = models.CharField(verbose_name="Question2",max_length=300, null=True, blank=True)
+    answer2 = models.TextField(verbose_name="Answer2", null=True, blank=True)
+    question3 = models.CharField(verbose_name="Question3",max_length=300, null=True, blank=True)
+    answer3 = models.TextField(verbose_name="Answer3", null=True, blank=True)
 
 
 class Peertoturfile(models.Model):
@@ -114,6 +119,7 @@ class StudentComments(models.Model):
 
 class Document(models.Model):
     pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)
+    ftitle=models.CharField(verbose_name="file title", max_length=200, null=True, blank=True)
     file = models.FileField(
         upload_to='peertoturs/docs/', null=True, blank=True)
     dateupload = models.DateTimeField(auto_now_add=True)
