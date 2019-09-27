@@ -23,7 +23,7 @@ urlpatterns = [
     path('upload/', upload, name="upload"),
     path('upload_list/', upload_list, name="upload_list"),
     path('addpeertotur/', add_peertotur.as_view(), name="add_peertotur"),
-    path('document_detail', document_detail.as_view(), name="document_detail"),
+    path('document_detail/', document_detail.as_view(), name="document_detail"),
     path('peertotur_experties', peertotur_experties.as_view(),
          name='peertotur_experties'),
     path('peertotur_exp_list/', peertotur_exp_list.as_view(),

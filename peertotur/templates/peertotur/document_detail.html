@@ -3,19 +3,50 @@
 {% block content%}
 {% load crispy_forms_tags %}
 <h2>Upload Files</h2>
-<form method="post" action="{% url 'peertotur:document_detail' %}" entype="multipart/form-data"> {% csrf_token %}
+<!--<form method="post" action="{% url 'peertotur:document_detail' %}" entype="multipart/form-data"> {% csrf_token %}
 <input type="file" name="files" multiple />
-<input type="submit" value="Upload" />
-{% comment %} <script>
+<input type="submit" value="Upload" />-->
+<script>
   $(document).ready(function(){
     $('#id_file').attr("multiple","true");
 
   })
  </script>
 <form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
- {{ form.file }}
- <input type="submit" value="upload" /> {% endcomment %}
+ {{ form }}
+ <input type="submit" value="upload" /> 
 
 </form>
+
+<!-- List of Uploads -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Date Upload</th>
+      <th scope="col">File</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for f in flist %}
+    <tr>
+      <th scope="row">1</th>
+      <td>{{ f.dateupload }}</td>
+      <td>
+          {% if f.file %}
+            <a href="{{ f.file.url }}" class="btn" target="_blank">
+                <img src="{{ f.file.url }}" style="max-width:60px;">
+            </a>
+          {% else %}
+              <p>No Image</p>
+          {% endif %}
+      </td>
+      <td>@mdo</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
 
 {% endblock %}

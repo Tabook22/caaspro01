@@ -113,8 +113,9 @@ class StudentComments(models.Model):
 
 
 class Document(models.Model):
+    pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)
     file = models.FileField(
-        'Document', upload_to='peertoturs/mydocs/', null=True, blank=True)
+        upload_to='peertoturs/docs/', null=True, blank=True)
     dateupload = models.DateTimeField(auto_now_add=True)
 
     @property

@@ -143,5 +143,5 @@ class FileForm(forms.ModelForm):
 class attachmentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ["file"]
+        fields = ["pname", "file"]
    # file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))

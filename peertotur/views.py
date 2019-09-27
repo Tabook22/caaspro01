@@ -277,17 +277,24 @@ class document_detail(CreateView):
     form_class = attachmentForm
     #fields = ['file']
     template_name = 'peertotur/document_detail.html'
+    success_url = reverse_lazy('peertotur:document_detail')
 
     def get(self, request, *args, **kwargs):
         print("-------------------in the name of god most merci most merciful-------------")
         form = self.form_class()
-        return render(request, self.template_name, {'form': form})
+        getAll = Document.objects.all()
+        return render(request, self.template_name, {'form': form, 'flist': getAll})
 
     def post(self, request, *args, **kwargs):
         print("-----allah----")
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
             print("-----in the name of allah-----")
+            # myfile = request.FILES['file']
+            # fs = FileSystemStorage()
+            # filename = fs.save(myfile.name, myfile)
+            # uploaded_file_url = fs.url(filename)
+            # print(uploaded_file_url)
             form.save()
             return HttpResponseRedirect(self.success_url)
         else:
