@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+{% load widget_tweaks %}
+{% block content%}
+<h2>Peertotur list</h2>
+<p>
+    <a href="{% url 'peertotur:add_peertotur' %}" class="btn btn-primary">Add New Peertotur</a>
+</p>
+<div class="row">
+<div class="col-12 rounded border m-2 pb-2">
+    <form  method="GET">
+     {{ filter.form|bootstrap }}   
+    
+      <button type="submit" class="btn btn-primary">
+        <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+    </form>
+
+</div>  
+</div>
+
+<div class="row">
+<div class="col-12 rounded border m-2 pb-2">
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th> </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in filter.qs %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ f.reqdate|date:"D, d M, Y"}}</td>
+            <td>
+                 {{ f.pname}}
+            </td>
+            <td>
+                {% if f.pimg %}
+                    <a href="{{ f.pimg.url }}" class="btn" target="_blank">
+                        <img src="{{ f.pimg.url }}" style="max-width:60px;">
+                    </a>
+                {% else %}
+                    <p>No Image</p>
+                {% endif %}
+            </td>
+            <td>
+                    <a href="{% url 'peertotur:peertotur_detail' f.pk %}" class="btn btn-primary " target="_blank"><i class="far fa-file-alt"></i></a>
+                </td>
+            <td>
+                <form method="POST" action="{% url 'peertotur:peertotur_delete' f.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger " ><i class="far fa-trash-alt"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% if is_paginated %}
+  <nav aria-label="Page navigation conatiner"></nav>
+  <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+    {% endif %}
+  </ul>
+  </nav>
+</div>
+{% endif %}
+
+<!-- {% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %} -->
+
+{% endblock %}

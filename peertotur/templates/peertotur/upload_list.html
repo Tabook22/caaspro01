@@ -2,7 +2,35 @@
 
 {% block content%}
 <h2>Upload List</h2>
-{% for f in uploadedfiles %}
-    {{ f.fname}} <br>
-{% endfor %}
+<p>
+    <a href="{% url 'peertotur:class_fileupload' %}" class="btn btn-primary">Upload File</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Url</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in uploadedfiles %}
+        <tr>
+            <td>
+                 {{ f.fname}}
+            </td>
+            <td>
+                <a href="{{ f.filepath.url }}" class="btn btn-primary" target="_blank">view attatchment</a>
+            </td>
+            <td>
+                <form method="POST" action="{% url 'peertotur:upload_delete' f.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" >Delete File</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}

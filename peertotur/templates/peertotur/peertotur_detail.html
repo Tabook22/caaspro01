@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content%}
+<h2>Peertotur Detail</h2>
+<div class="row">
+<div class="col-12 rounded border m-2 pb-2 pt-2"> 
+<a href="{% url 'peertotur:peertotur_update' object.pk %}" class="btn btn-primary" target="_blank">Edit</a>
+</div>
+</div>
+<div class="row">
+<div class="col-12 rounded border m-2 pb-2 pt-2"> 
+
+<table class="table">
+
+    <tbody>
+        
+        <tr>
+        <td class="lst-title">
+        Name:
+        </td>
+            <td>
+                 {{object.pname}}
+            </td>
+        </tr>
+
+  <tr>
+        <td class="lst-title">
+        Address:
+        </td>
+            <td>
+                 {{object.paddress}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        Email:
+        </td>
+            <td>
+                 {{object.pemail}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        Major:
+        </td>
+            <td>
+                 {{object.pmajor}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        Department:
+        </td>
+            <td>
+                 {{object.pdep}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        GPA Major:
+        </td>
+            <td>
+                 {{object.pgpamajor}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        PGA Accumlative:
+        </td>
+            <td>
+                 {{object.pgpacum}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        Expected Graduation (month/year):
+        </td>
+            <td>
+                 {{object.pexgraduate}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        Date:
+        </td>
+            <td>
+                 {{object.prqdate}}
+            </td>
+        </tr>
+        <tr>
+        <td class="lst-title">
+        Tel:
+        </td>
+            <td>
+                 {{object.ptel}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        GSM:
+        </td>
+            <td>
+                 {{object.pgsm}}
+            </td>
+        </tr>
+        <tr>
+        <td class="lst-title">
+        Year of Study:
+        </td>
+            <td>
+                 {{object.yearofstudy}}
+            </td>
+        </tr>
+        <tr>
+       <td class="lst-title">
+        Peer Totur Image:
+        </td>
+           <td>
+            {% if object.pimg %}
+                    <a href="{{ object.pimg.url }}" class="btn" target="_blank">
+                        <img src="{{ object.pimg.url }}" style="max-width:100px;">
+                    </a>
+                {% else %}
+                    <p>No Image</p>
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+{% endblock %}
