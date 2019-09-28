@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/',include('accounts.urls')),
     path('peertoturs/',include('peertotur.urls')),
+    path('attendance/', include('attendance.urls')),
     path('', include("django.contrib.auth.urls")),
 ]
 # the idea here is to be able to display media file in the development environment, usuallyu in the 

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'accounts.apps.AccountsConfig',
     'main.apps.MainConfig',
+    'attendance.apps.AttendanceConfig',
     'peertotur.apps.PeertoturConfig',
     'django_filters',
     'bootstrapform',

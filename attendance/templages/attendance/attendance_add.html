@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content%}
+{% load crispy_forms_tags %}
+<h2>Short paragraph</h2>
+<!--<form method="post" action="{% url 'peertotur:document_detail' %}" entype="multipart/form-data"> {% csrf_token %}
+<input type="file" name="files" multiple />
+<input type="submit" value="Upload" />-->
+<script>
+    $(document).ready(function () {
+        $('#id_file').attr("multiple", "true");
+
+    })
+</script>
+<form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
+    {% crispy form %}
+    <!-- <input type="submit" value="Add Questions" /> -->
+</form>
+
+
+{% endblock %}
