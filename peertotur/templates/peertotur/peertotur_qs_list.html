@@ -2,7 +2,7 @@
 
 {% block content%}
 {% load crispy_forms_tags %}
-<h2>Upload Files</h2>
+<h2>Short paragraph</h2>
 <!--<form method="post" action="{% url 'peertotur:document_detail' %}" entype="multipart/form-data"> {% csrf_token %}
 <input type="file" name="files" multiple />
 <input type="submit" value="Upload" />-->
@@ -13,8 +13,8 @@
   })
  </script>
 <form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
- {{ form|crispy }}
- <input type="submit" value="upload" /> 
+    {% crispy form %}
+ <!-- <input type="submit" value="Add Questions" /> -->
 
 </form>
 
@@ -25,8 +25,8 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Peer Tutor</th>
-      <th scope="col">Question Title</th>
-      <th scope="col">Question Answer</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -34,21 +34,15 @@
     <tr>
       <th scope="row">{{ forloop.counter }} </th>
       <td>{{ f.dateupload|date:"D, d M, Y"}}</td>
-      <td>{{ f.ftitle }}</td>
       <td> {{ f.pname }}</td>
       <td>
-          {% if f.file %}
-            <a href="{{ f.file.url }}" class="btn" target="_blank">
-                <img src="{{ f.file.url }}" style="max-width:60px;">
-            </a>
-          {% else %}
-              <p>No Image</p>
-          {% endif %}
+        <a href="{% url 'peertotur:peertotur_qs_update' f.pk %}" class="btn btn-primary "
+        target="_blank"><i class="far fa-file-alt"></i></a>
       </td>
       <td>
-        <form method="POST" action="{% url 'peertotur:document_detail_delete' f.pk %}">
+        <form method="POST" action="{% url 'peertotur:peertotur_qs_delete' f.pk %}">
           {% csrf_token %}
-          <a href="{% url 'peertotur:document_detail_delete' f.pk %}" class="btn btn-danger confirm-delete"
+          <a href="{% url 'peertotur:peertotur_qs_delete' f.pk %}" class="btn btn-danger confirm-delete"
               title="Delete" data-toggle="modal" data-target="#confirmDeleteModal"
               id="deleteButton{{f.pk}}">
               <!-- <a href="{% url 'peertotur:peertoturexp_delete' f.pk %}"

@@ -111,7 +111,6 @@ class add_peertotur(CreateView):
 
 # Notice: the primary funciton of DetailView is to redern view from a specific object
 
-
 class peertotur_detail(DetailView):
     template_name = "peertotur/peertotur_detail.html"
     context_object_name = "peer"
@@ -123,13 +122,6 @@ class peertotur_detail(DetailView):
         # this is the actual id which passed through the url
         id_ = self.kwargs.get("id")
         return get_object_or_404(Peertotur, id=id_)
-
-# class search_peer_listuser_name():
-#     def__init__(self,peer_name,*args, **kwargs):
-
-#     def get(self,request, *args, **kwargs):
-#         getpeer=Peertotur.objects.filter(pname=peer_name)
-
 
 class peertotur_list(ListView):
     # The Django ListView class comes with built-in support for pagination so all we need to do
@@ -239,9 +231,9 @@ class peertotur_experties(CreateView):
         if form.is_valid():
             peer = form.save()
             peer.save()
-            return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_exp_list'))
+            return HttpResponseRedirect(reverse_lazy('peertotur:peertotur_experties'))
 
-        return render(request, 'peertotur/peertotur_exp_list.html', {'form': form})
+        return render(request, 'peertotur/peertotur_experties.html', {'form': form})
 
 
 class peertotur_exp_list(ListView):
@@ -319,12 +311,12 @@ class peertotur_qs_list(CreateView):
     form_class = PeertoturqsForm
     #fields = ['file']
     template_name = 'peertotur/peertotur_qs_list.html'
-    success_url = reverse_lazy('peertotur:peertotur_qs_list.html')
+    success_url = reverse_lazy('peertotur:peertotur_qs_list')
     paginate_by = 5
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        getAll = Document.objects.all()
+        getAll = Peertoturq.objects.all()
         return render(request, self.template_name, {'form': form, 'flist': getAll})
 
     def post(self, request, *args, **kwargs):
@@ -339,6 +331,19 @@ class peertotur_qs_list(CreateView):
             return HttpResponseRedirect(self.success_url)
         else:
             return render(request, self.template_name, {'form': form})
+
+class peertotur_qs_update(UpdateView):
+    #model = Peertoturq
+    form_class = PeertoturqsForm
+    success_url = success_url = reverse_lazy("peertotur:peertotur_qs_list")
+
+    def get_object(self):
+        id = self.kwargs.get("id")
+        return get_object_or_404(Peertoturq, id=id)
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
 class peertotur_qs_delete(DeleteView):
     # here we are deleting without confirmation page, we did the confirmation using jquery in the html page,
     # becausse get method will call for the confirmation page, and the post method will do the deletion

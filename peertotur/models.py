@@ -83,13 +83,14 @@ class Peertoturexperties(models.Model):
 
 
 class Peertoturq(models.Model):
-    pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE)
+    pname = models.ForeignKey('Peertotur', on_delete=models.CASCADE ,verbose_name="Peer Tutor Name")
     question1 = models.CharField(verbose_name="Question1",max_length=300, null=True, blank=True)
     answer1 = models.TextField(verbose_name="Answer1", null=True, blank=True)
     question2 = models.CharField(verbose_name="Question2",max_length=300, null=True, blank=True)
     answer2 = models.TextField(verbose_name="Answer2", null=True, blank=True)
     question3 = models.CharField(verbose_name="Question3",max_length=300, null=True, blank=True)
     answer3 = models.TextField(verbose_name="Answer3", null=True, blank=True)
+    qsdate = models.DateTimeField(auto_now_add=True)
 
 
 class Peertoturfile(models.Model):
