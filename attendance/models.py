@@ -4,10 +4,10 @@ from django.utils import timezone
 from datetime import datetime  
 # Create your models here.
 class PeerReg(models.Model):
-    pname = models.CharField(
-        verbose_name="Name", max_length=200, null=True, blank=True)
-    datein = models.DateTimeField(verbose_name="Time In",null=True, blank=True, default=datetime.now())
-    dateout = models.DateTimeField(verbose_name="Time Out",null=True, blank=True, default=datetime.now())
+    pname = models.ForeignKey('peertotur.Peertotur', on_delete=models.CASCADE, verbose_name="Peer Totur List")
+    datein = models.CharField(verbose_name="Date In",max_length=20, null=True, blank=True)
+    timein=models.CharField(verbose_name="Time In",max_length=20,null=True, blank=True)
+    timeout=models.CharField(verbose_name="Time Out",max_length=20,null=True, blank=True)
 
     class Meta:
         ordering = ['-datein']  # ordring by reqdate descending
