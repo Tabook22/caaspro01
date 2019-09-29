@@ -1,13 +1,44 @@
 {% include "partials/_header.html" %}
 {% include 'partials/_confirm_delete_modal.html' %}
 <!-- Side Bar -->
-
+<style>
+    #sidebar {
+       background-color:#595a5b;
+       
+    }
+    #sidebar ul{
+        width:100%;
+    }
+    #sidebar .pl-2{
+       background-color:rgb(122, 122, 122)!important;
+    }
+    #sidebar .pl-4{
+        background-color:rgb(167, 165, 165)!important;
+     }
+     
+     #sidebar .pl-4>li{
+        padding-left:30px;
+    }
+    #sidebar .pl-2>li>a{
+        padding:30px;
+    }
+    #sidebar .pl-2>li>a>i{
+        padding-right:10px;
+    }
+    #sidebar ul>li{
+        border-bottom:1px solid #888;
+    }
+    #sidebar ul>li>a{
+        color:#f1f1f1;
+    }
+  
+</style>
 
 <li Begin page content -->
 <main role="main" class="flex-shrink-0">
    <div class="container">
          <div class="row">
-               <div class="col-3 collapse d-md-flex bg-light pt-2 min-vh-100" id="sidebar">
+               <div class="col-3 collapse d-md-flex pt-2 min-vh-100" id="sidebar">
                    <ul class="nav flex-column flex-nowrap">
                        <li class="nav-item">
                        <a class="nav-link" href="/">
@@ -60,8 +91,10 @@
                                </ul>
                            </div>
                        </li>
-                       <li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
-                       <li class="nav-item"><a class="nav-link" href="#">Export</a></li>
+                       <li class="nav-item">
+                           <a class="nav-link" href="#">Reservation</a>
+                        </li>
+                       <li class="nav-item"><a class="nav-link" href="#">Reports</a></li>
                    </ul>
                </div>
                <div class="col pt-2">
