@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content%}
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Are you sure you want ot delete "{{peer.pname}}"?</p>
+    <input type="submit" value="Delete"/>
+</form>
+{% endblock %}

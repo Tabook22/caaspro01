@@ -11,22 +11,16 @@ class PeerRegForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_id = 'frmreg'
         self.helper.form_method = 'post'
-        self.helper.form_action = reverse('attendance:peer_reg_list')
+        self.helper.form_action = reverse('attendance:attendance_add')
         self.helper.layout = Layout(
             Row(
-                Column('pname', css_class='form-group col-md-6 mb-0'),
+                Column('pname', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
              Row(
-                Column('datein', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('timein', css_class='form-group col-md-6 mb-0'),
-                css_class='form-row'
-            ),
-            Row(
-                Column('timeout', css_class='form-group col-md-6 mb-0'),
+                Column('datein', css_class='form-group col-md-4 mb-0'),
+                Column('timein', css_class='form-group col-md-4 mb-0'),
+                Column('timeout', css_class='form-group col-md-4 mb-0'),
                 css_class='form-row'
             ),
             Row(

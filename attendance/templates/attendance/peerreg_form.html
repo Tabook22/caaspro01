@@ -15,7 +15,7 @@
     <div class="col-12 rounded border m-2 pd-2">
         <form method="post" enctype="multipart/form-data" action="">{% csrf_token %}
             {% crispy form %}
-            <!-- <input type="submit" value="Add Questions" /> -->
+            <input type="submit" value="Add Questions" />
         </form>
     </div>
 </div>
@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for f in getAll %}
+            {% for f in filter.qs %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <!-- <td>{{ f.reqdate|date:"D, d M, Y"}}</td> -->

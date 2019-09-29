@@ -1,12 +1,17 @@
 from django.contrib import admin
 from django.urls import path,include
-from .views import (peer_reg, peer_reg_list)
+from .views import (
+    attendance_add, attendance_list,
+    attendance_detail,
+    attendance_delete)
 
 app_name="attendance"
 
 
 urlpatterns = [ 
-    path('', peer_reg.as_view(),name='peer_reg'),
-    path('peer_reg_list', peer_reg_list.as_view(), name='peer_reg_list')
+    path('attendance_add/', attendance_add.as_view(),name='attendance_add'),
+    path('attendance_list/', attendance_list.as_view(), name='attendance_list'),
+    path('attendance_detail/<int:id>/', attendance_detail.as_view(),name='attendance_detail'),
+    path('attendance_delete/<int:pk>/', attendance_delete.as_view(),name='attendance_delete')
    
 ]
