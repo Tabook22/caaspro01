@@ -316,8 +316,8 @@ class peertotur_qs_list(CreateView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        getAll = Peertoturq.objects.all()
-        return render(request, self.template_name, {'form': form, 'flist': getAll})
+       # getAll = Peertoturq.objects.all()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES)
